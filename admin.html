@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="uk" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PaperMentor — Кабінет Виконавця та Адміністратора</title>
+  <meta name="description" content="Панель керування замовленнями та спілкування з клієнтами для авторів і підтримки PaperMentor.">
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            dark: {
+              obsidian: '#080B11',
+              slate: '#0F1626',
+              card: '#151D30',
+              border: '#222F47'
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            display: ['Outfit', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Custom Premium Effects & CSS Variable Themes (Defaults to Sunset Neon) -->
+  <style>
+    :root {
+      /* Default Theme: Sunset Neon (Vibrant Hot Pink & Orange) - Warm, Rich Neon Vibe */
+      --color-primary: #EC4899;
+      --color-primary-rgb: 236, 72, 153;
+      --color-secondary: #F97316;
+      --color-secondary-rgb: 249, 115, 22;
+      --gradient-text: linear-gradient(135deg, #EC4899 0%, #D946EF 40%, #F97316 100%);
+      --gradient-bg: linear-gradient(135deg, #EC4899 0%, #F97316 100%);
+      --glow-shadow: rgba(236, 72, 153, 0.35);
+      --glow-shadow-secondary: rgba(249, 115, 22, 0.3);
+    }
+
+    body.theme-violet {
+      /* Cosmic Violet (Deep Purple & Vivid Rose) - Sleek, Premium SaaS Vibe */
+      --color-primary: #8B5CF6;
+      --color-primary-rgb: 139, 92, 246;
+      --color-secondary: #EC4899;
+      --color-secondary-rgb: 236, 72, 153;
+      --gradient-text: linear-gradient(135deg, #C084FC 0%, #8B5CF6 40%, #EC4899 100%);
+      --gradient-bg: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+      --glow-shadow: rgba(139, 92, 246, 0.35);
+      --glow-shadow-secondary: rgba(236, 72, 153, 0.3);
+    }
+
+    body.theme-emerald {
+      /* Royal Emerald (Mint Emerald & Gold) - Luxury and Prestige Vibe */
+      --color-primary: #10B981;
+      --color-primary-rgb: 16, 185, 129;
+      --color-secondary: #FBBF24;
+      --color-secondary-rgb: 251, 191, 36;
+      --gradient-text: linear-gradient(135deg, #34D399 0%, #10B981 40%, #FBBF24 100%);
+      --gradient-bg: linear-gradient(135deg, #10B981 0%, #FBBF24 100%);
+      --glow-shadow: rgba(16, 185, 129, 0.35);
+      --glow-shadow-secondary: rgba(251, 191, 36, 0.3);
+    }
+
+    body.theme-cyber-blue {
+      /* Cyber Blue (Electric Cobalt & Magenta) - Futuristic High-tech Vibe */
+      --color-primary: #3B82F6;
+      --color-primary-rgb: 59, 130, 246;
+      --color-secondary: #EC4899;
+      --color-secondary-rgb: 236, 72, 153;
+      --gradient-text: linear-gradient(135deg, #60A5FA 0%, #3B82F6 40%, #EC4899 100%);
+      --gradient-bg: linear-gradient(135deg, #3B82F6 0%, #EC4899 100%);
+      --glow-shadow: rgba(59, 130, 246, 0.35);
+      --glow-shadow-secondary: rgba(236, 72, 153, 0.3);
+    }
+
+    body.theme-glacier {
+      /* Arctic Glacier (Vibrant Cyan & Ice Blue) - High-end Crisp Calm Vibe */
+      --color-primary: #06B6D4;
+      --color-primary-rgb: 6, 182, 212;
+      --color-secondary: #3B82F6;
+      --color-secondary-rgb: 59, 130, 246;
+      --gradient-text: linear-gradient(135deg, #22D3EE 0%, #06B6D4 40%, #3B82F6 100%);
+      --gradient-bg: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
+      --glow-shadow: rgba(6, 182, 212, 0.35);
+      --glow-shadow-secondary: rgba(59, 130, 246, 0.3);
+    }
+
+    body.theme-harvard {
+      /* Crimson Gold (Cherry Crimson & Amber Gold) - Elite University Vibe */
+      --color-primary: #BE123C;
+      --color-primary-rgb: 190, 18, 60;
+      --color-secondary: #D97706;
+      --color-secondary-rgb: 217, 119, 6;
+      --gradient-text: linear-gradient(135deg, #FB7185 0%, #BE123C 40%, #D97706 100%);
+      --gradient-bg: linear-gradient(135deg, #BE123C 0%, #D97706 100%);
+      --glow-shadow: rgba(190, 18, 60, 0.35);
+      --glow-shadow-secondary: rgba(217, 119, 6, 0.3);
+    }
+
+    body.theme-platinum {
+      /* Obsidian Platinum (Slate Silver & Sky Blue) - Ultramodern Minimalist Vibe */
+      --color-primary: #94A3B8;
+      --color-primary-rgb: 148, 163, 184;
+      --color-secondary: #38BDF8;
+      --color-secondary-rgb: 56, 189, 248;
+      --gradient-text: linear-gradient(135deg, #F1F5F9 0%, #94A3B8 50%, #38BDF8 100%);
+      --gradient-bg: linear-gradient(135deg, #94A3B8 0%, #38BDF8 100%);
+      --glow-shadow: rgba(148, 163, 184, 0.35);
+      --glow-shadow-secondary: rgba(56, 189, 248, 0.3);
+    }
+
+    body {
+      background-color: #080B11;
+      color: #F3F4F6;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    
+    /* Cyber grid overlay */
+    .grid-overlay {
+      background-image: 
+        radial-gradient(circle at 50% 50%, rgba(var(--color-primary-rgb), 0.04) 0%, rgba(8, 11, 17, 0) 80%),
+        linear-gradient(rgba(255, 255, 255, 0.005) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.005) 1px, transparent 1px);
+      background-size: 100% 100%, 50px 50px, 50px 50px;
+    }
+
+    /* Dynamic classes */
+    .gradient-text-dynamic {
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gradient-bg-dynamic {
+      background: var(--gradient-bg);
+    }
+
+    .glow-sphere {
+      filter: blur(140px);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* Floating animations for symbols */
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-35px) rotate(15deg); }
+    }
+    @keyframes floatX {
+      0%, 100% { transform: translateX(0) rotate(0deg); }
+      50% { transform: translateX(35px) rotate(-20deg); }
+    }
+    @keyframes floatDiag {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-25px, 25px) rotate(25deg); }
+    }
+    .float-1 { animation: floatY 18s ease-in-out infinite; }
+    .float-2 { animation: floatX 22s ease-in-out infinite; }
+    .float-3 { animation: floatDiag 20s ease-in-out infinite; }
+
+    /* Custom scrollbar */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #080B11;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #222F47;
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: var(--color-primary);
+    }
+  </style>
+</head>
+<body class="font-sans antialiased overflow-x-hidden min-h-screen flex flex-col justify-between selection:bg-opacity-80 selection:bg-[var(--color-primary)] selection:text-white">
+
+  <!-- Glow Background Spheres -->
+  <div class="absolute top-[8%] left-[-15%] w-[450px] h-[450px] bg-opacity-10 bg-[var(--color-primary)] glow-sphere"></div>
+  <div class="absolute top-[35%] right-[-15%] w-[500px] h-[500px] bg-opacity-5 bg-[var(--color-secondary)] glow-sphere"></div>
+  <div class="absolute bottom-[15%] left-[15%] w-[400px] h-[400px] bg-opacity-5 bg-[var(--color-primary)] glow-sphere"></div>
+
+  <!-- Background Floating Academic Symbols -->
+  <div class="absolute top-[18%] left-[8%] float-1 opacity-10 text-[var(--color-primary)] text-4xl font-extrabold pointer-events-none select-none">∫</div>
+  <div class="absolute top-[15%] right-[25%] float-2 opacity-15 text-[var(--color-secondary)] text-3xl font-bold pointer-events-none select-none">π</div>
+  <div class="absolute top-[45%] left-[20%] float-3 opacity-10 text-[var(--color-primary)] text-5xl font-black pointer-events-none select-none">Σ</div>
+  <div class="absolute bottom-[30%] left-[10%] float-2 opacity-10 text-[var(--color-secondary)] text-4xl font-mono pointer-events-none select-none">{ ... }</div>
+  <div class="absolute bottom-[25%] right-[22%] float-3 opacity-15 text-[var(--color-primary)] text-3xl font-extrabold pointer-events-none select-none">Δy/Δx</div>
+
+  <!-- Main Gateway Container -->
+  <main class="flex-grow flex items-center justify-center relative z-10 py-12 px-4 sm:px-6 lg:px-8">
+
+    <!-- 1. LOGIN SCREEN -->
+    <div id="login-panel" class="w-full max-w-md bg-dark-slate border border-dark-border/80 rounded-3xl p-8 space-y-6 shadow-2xl backdrop-blur-md relative overflow-hidden transition-all duration-500 transform scale-100">
+      <div class="absolute -top-10 -right-10 w-32 h-32 bg-[var(--color-primary)] opacity-10 rounded-full blur-2xl"></div>
+      
+      <div class="text-center space-y-3">
+        <!-- Logo -->
+        <div class="flex items-center justify-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[var(--color-primary)] to-[var(--color-secondary)] p-[1px] shadow-lg flex items-center justify-center">
+            <div class="w-full h-full bg-dark-obsidian rounded-xl flex items-center justify-center">
+              <svg class="w-5 h-5 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+              </svg>
+            </div>
+          </div>
+          <span class="text-2xl font-bold tracking-tight text-white font-display">Paper<span class="gradient-text-dynamic font-extrabold">Mentor</span></span>
+        </div>
+        <h2 class="text-xl font-bold text-white font-display">Панель авторів та підтримки</h2>
+        <p class="text-xs text-gray-400">Авторизуйтеся для роботи з проектами та чатами клієнтів</p>
+      </div>
+
+      <!-- Quick Fill Buttons -->
+      <div class="bg-dark-obsidian/60 border border-dark-border/40 rounded-2xl p-4.5 space-y-2">
+        <span class="block text-[10px] font-extrabold uppercase tracking-widest text-gray-500 text-center">Швидкий вхід для тесту:</span>
+        <div class="grid grid-cols-2 gap-2.5">
+          <button onclick="quickFill('writer')" class="py-2.5 rounded-xl bg-dark-slate hover:bg-dark-card border border-dark-border hover:border-[var(--color-primary)] text-[10px] font-bold text-white transition-colors">
+            Дмитро (Доцент)
+          </button>
+          <button onclick="quickFill('admin')" class="py-2.5 rounded-xl bg-dark-slate hover:bg-dark-card border border-dark-border hover:border-[var(--color-secondary)] text-[10px] font-bold text-white transition-colors">
+            Адміністрація
+          </button>
+        </div>
+      </div>
+
+      <!-- Login Form -->
+      <form onsubmit="handleLogin(event)" class="space-y-4">
+        <div class="space-y-1">
+          <label class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Електронна пошта</label>
+          <input type="email" id="login-email" required placeholder="writer@papermentor.com" class="w-full bg-dark-obsidian border border-dark-border rounded-xl px-4 py-3.5 text-xs text-white focus:outline-none focus:border-[var(--color-primary)] transition-all">
+        </div>
+        <div class="space-y-1">
+          <label class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Пароль</label>
+          <input type="password" id="login-password" required placeholder="••••••••" class="w-full bg-dark-obsidian border border-dark-border rounded-xl px-4 py-3.5 text-xs text-white focus:outline-none focus:border-[var(--color-primary)] transition-all">
+        </div>
+        <button type="submit" class="w-full py-4.5 rounded-xl bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white font-bold text-sm transition-all transform hover:-translate-y-0.5 shadow-lg shadow-[var(--color-primary)]/10">
+          Увійти в кабінет
+        </button>
+      </form>
+
+      <div class="text-center">
+        <a href="index.html" class="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+          Повернутися на головну
+        </a>
+      </div>
+    </div>
+
+    <!-- 2. MAIN DASHBOARD (HIDDEN ON START) -->
+    <div id="dashboard-panel" class="hidden w-full max-w-7xl space-y-8 animate-fade-in">
+      
+      <!-- Upper Header Info -->
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div class="space-y-1.5">
+          <div class="flex items-center gap-3">
+            <h1 class="text-3xl font-extrabold text-white font-display">Панель керування <span class="gradient-text-dynamic font-black">Робочим Простором</span></h1>
+            <span id="role-badge" class="px-2.5 py-0.5 text-[9px] font-extrabold rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase tracking-widest">Виконавець</span>
+          </div>
+          <p class="text-gray-400 text-xs sm:text-sm">Контроль заявок, завантаження фінальних версій, оцінка вартості та робота з клієнтами</p>
+        </div>
+
+        <!-- Controls (Theme switcher & Logout) -->
+        <div class="flex items-center gap-4 w-full md:w-auto justify-end">
+          
+          <!-- Theme Palette Selector -->
+          <div class="relative group">
+            <button class="w-10 h-10 rounded-xl bg-dark-slate hover:bg-dark-card border border-dark-border flex items-center justify-center text-gray-400 hover:text-white transition-all shadow-inner" title="Змінити палітру кольорів">
+              <svg class="w-5 h-5 text-[var(--color-primary)] animate-spin-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            </button>
+            <div class="absolute right-0 mt-2 w-64 rounded-2xl bg-dark-card border border-dark-border p-4 shadow-2xl hidden group-hover:block transition-all z-50">
+              <span class="block text-[9px] font-extrabold uppercase tracking-widest text-gray-500 mb-3">Оберіть кольорову гаму:</span>
+              <div class="space-y-2">
+                <button type="button" onclick="changeTheme('sunset')" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl bg-dark-slate border border-dark-border hover:border-[var(--color-primary)] text-xs font-semibold text-white transition-colors">
+                  <span class="w-4 h-4 rounded-full bg-gradient-to-r from-pink-500 to-orange-500"></span>
+                  Sunset Neon (Захід сонця)
+                </button>
+                <button type="button" onclick="changeTheme('violet')" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl bg-dark-slate border border-dark-border hover:border-[var(--color-primary)] text-xs font-semibold text-white transition-colors">
+                  <span class="w-4 h-4 rounded-full bg-gradient-to-r from-violet-500 to-pink-500"></span>
+                  Cosmic Violet (Аметист)
+                </button>
+                <button type="button" onclick="changeTheme('emerald')" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl bg-dark-slate border border-dark-border hover:border-[var(--color-primary)] text-xs font-semibold text-white transition-colors">
+                  <span class="w-4 h-4 rounded-full bg-gradient-to-r from-emerald-500 to-yellow-500"></span>
+                  Royal Emerald (Смарагд)
+                </button>
+                <button type="button" onclick="changeTheme('cyber-blue')" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl bg-dark-slate border border-dark-border hover:border-[var(--color-primary)] text-xs font-semibold text-white transition-colors">
+                  <span class="w-4 h-4 rounded-full bg-gradient-to-r from-blue-500 to-pink-500"></span>
+                  Cyber Blue (Кібернетика)
+                </button>
+                <button type="button" onclick="changeTheme('glacier')" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl bg-dark-slate border border-dark-border hover:border-[var(--color-primary)] text-xs font-semibold text-white transition-colors">
+                  <span class="w-4 h-4 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500"></span>
+                  Arctic Glacier (Арктика)
+                </button>
+                <button type="button" onclick="changeTheme('harvard')" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl bg-dark-slate border border-dark-border hover:border-[var(--color-primary)] text-xs font-semibold text-white transition-colors">
+                  <span class="w-4 h-4 rounded-full bg-gradient-to-r from-red-600 to-amber-600"></span>
+                  Crimson Gold (Гарвард)
+                </button>
+                <button type="button" onclick="changeTheme('platinum')" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl bg-dark-slate border border-dark-border hover:border-[var(--color-primary)] text-xs font-semibold text-white transition-colors">
+                  <span class="w-4 h-4 rounded-full bg-gradient-to-r from-slate-400 to-sky-400"></span>
+                  Obsidian Platinum (Сталь)
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="handleLogout()" class="px-5 py-2.5 rounded-xl bg-dark-slate hover:bg-dark-card border border-dark-border text-xs font-bold text-white transition-colors whitespace-nowrap">
+            Вийти з кабінету
+          </button>
+        </div>
+      </div>
+
+      <!-- STATISTICS ROW -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        <div class="bg-dark-slate border border-dark-border/60 rounded-2xl p-5 space-y-1 relative overflow-hidden">
+          <span class="block text-[10px] text-gray-500 font-extrabold uppercase tracking-wide">Мій заробіток (₴)</span>
+          <span id="stat-earnings" class="block text-2xl md:text-3xl font-extrabold text-white font-display">18 450 ₴</span>
+          <span class="text-[9px] text-green-400 block font-semibold">+1 500 ₴ сьогодні</span>
+        </div>
+        <div class="bg-dark-slate border border-dark-border/60 rounded-2xl p-5 space-y-1 relative overflow-hidden">
+          <span class="block text-[10px] text-gray-500 font-extrabold uppercase tracking-wide">Замовлень в роботі</span>
+          <span id="stat-active" class="block text-2xl md:text-3xl font-extrabold text-white font-display">2</span>
+          <span class="text-[9px] text-gray-400 block font-semibold">Надіслано 1 на перевірку</span>
+        </div>
+        <div class="bg-dark-slate border border-dark-border/60 rounded-2xl p-5 space-y-1 relative overflow-hidden">
+          <span class="block text-[10px] text-gray-500 font-extrabold uppercase tracking-wide">Виконано робіт</span>
+          <span id="stat-completed" class="block text-2xl md:text-3xl font-extrabold text-[var(--color-primary)] font-display">24</span>
+          <span class="text-[9px] text-gray-400 block font-semibold">Конверсія ТЗ: 100%</span>
+        </div>
+        <div class="bg-dark-slate border border-dark-border/60 rounded-2xl p-5 space-y-1 relative overflow-hidden">
+          <span class="block text-[10px] text-gray-500 font-extrabold uppercase tracking-wide">Мій рейтинг авторитету</span>
+          <span class="block text-2xl md:text-3xl font-extrabold text-white font-display flex items-center gap-1.5 font-display">
+            4.95 
+            <svg class="w-5 h-5 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+          </span>
+          <span class="text-[9px] text-gray-400 block font-semibold">50 позитивних відгуків</span>
+        </div>
+      </div>
+
+      <!-- MAIN ROW: ORDERS & MESSAGES -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Side: Order Console (7 cols) -->
+        <div class="lg:col-span-7 space-y-6">
+          
+          <!-- Filter Tabs -->
+          <div class="flex justify-between items-center border-b border-dark-border/40 pb-3">
+            <div class="flex gap-2 overflow-x-auto custom-scrollbar">
+              <button onclick="filterOrders('all')" id="tab-all" class="tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-[var(--color-primary)] text-white transition-all">Всі роботи</button>
+              <button onclick="filterOrders('in_work')" id="tab-in_work" class="tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-dark-slate border border-dark-border text-gray-400 hover:text-white transition-all">В роботі</button>
+              <button onclick="filterOrders('review')" id="tab-review" class="tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-dark-slate border border-dark-border text-gray-400 hover:text-white transition-all">На оцінці / Нові</button>
+              <button onclick="filterOrders('done')" id="tab-done" class="tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-dark-slate border border-dark-border text-gray-400 hover:text-white transition-all">Завершені</button>
+            </div>
+          </div>
+
+          <!-- Orders cards grid container -->
+          <div class="space-y-4" id="orders-list-container">
+            <!-- Джерело замовлень генерується динамічно -->
+          </div>
+        </div>
+
+        <!-- Right Side: Chat Hub (5 cols) -->
+        <div class="lg:col-span-5">
+          <div class="bg-dark-slate border border-dark-border rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[580px]">
+            
+            <div class="grid grid-cols-12 h-full">
+              <!-- Left Chat Column: Client selector (4 cols) -->
+              <div class="col-span-4 bg-dark-card border-r border-dark-border flex flex-col">
+                <div class="p-3 border-b border-dark-border text-[9px] font-extrabold uppercase tracking-widest text-gray-500">
+                  Активні чати
+                </div>
+                <div class="flex-grow overflow-y-auto custom-scrollbar divide-y divide-dark-border/30" id="chats-list-container">
+                  <!-- Чат-контакти генеруються динамічно -->
+                </div>
+              </div>
+
+              <!-- Right Chat Column: Selected Chat Pane (8 cols) -->
+              <div class="col-span-8 flex flex-col h-full bg-dark-slate/40">
+                <!-- Chat Header -->
+                <div class="bg-dark-card/90 border-b border-dark-border p-3.5 flex items-center justify-between" id="active-chat-header">
+                  <!-- Заголовок активного чату -->
+                </div>
+
+                <!-- Messages container -->
+                <div class="flex-grow p-4 space-y-4 overflow-y-auto custom-scrollbar" id="messages-container">
+                  <!-- Повідомлення -->
+                </div>
+
+                <!-- Input form -->
+                <form onsubmit="handleSendAdminMessage(event)" class="bg-dark-card p-3 border-t border-dark-border flex gap-2">
+                  <input type="text" id="admin-chat-input" placeholder="Введіть повідомлення клієнту..." class="flex-grow bg-dark-slate border border-dark-border rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-[var(--color-primary)] placeholder-gray-600">
+                  <button type="submit" class="w-10.5 h-10.5 rounded-xl bg-[var(--color-primary)] text-white flex items-center justify-center transition-colors">
+                    <svg class="w-5 h-5 transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                  </button>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Notification Toast -->
+  <div id="admin-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="bg-dark-card border border-[var(--color-primary)]/30 rounded-2xl p-4.5 shadow-2xl flex items-center gap-4 max-w-sm">
+      <div class="w-10 h-10 rounded-xl bg-opacity-15 bg-[var(--color-primary)] flex items-center justify-center text-[var(--color-primary)] shadow-inner border border-[var(--color-primary)]/20">
+        <svg class="w-5.5 h-5.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+      </div>
+      <div>
+        <p class="text-sm font-bold text-white" id="toast-title-text">Готово!</p>
+        <p class="text-xs text-gray-400" id="toast-desc-text">Опис операції.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark-obsidian border-t border-dark-border/50 py-8 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-gray-500">
+      <p>&copy; 2026 PaperMentor. Панель Авторів. Smart Academic Ecosystem. Усі права захищено.</p>
+    </div>
+  </footer>
+
+  <!-- Javascript Logic -->
+  <script>
+    // State of admin panel
+    const adminState = {
+      role: 'writer', // 'writer' or 'admin'
+      earnings: 18450,
+      activeOrders: 2,
+      completedOrders: 24,
+      selectedClientId: '409281',
+      selectedOrderId: 'АС-4929',
+      currentTab: 'all',
+      orders: [
+        {
+          id: 'АС-4929',
+          clientId: '409281',
+          clientName: 'Дмитро К. (Студент)',
+          title: 'Курсова робота з макроекономіки',
+          status: 'В роботі',
+          statusIdx: 1, // 0 = TZ, 1 = Work, 2 = Review, 3 = Done
+          deadline: '24.06.2026',
+          price: 2200,
+          type: 'in_work',
+          needsQuote: false
+        },
+        {
+          id: 'АС-4930',
+          clientId: '409281',
+          clientName: 'Дмитро К. (Студент)',
+          title: 'Лабораторна робота з алгоритмів на C++',
+          status: 'На вашій перевірці', // Means review draft uploaded
+          statusIdx: 2,
+          deadline: '20.06.2026',
+          price: 1500,
+          type: 'in_work',
+          needsQuote: false
+        },
+        {
+          id: 'АС-9821',
+          clientId: '902812',
+          clientName: 'Олена В. (Студент)',
+          title: 'Реферат / Есе: Сучасні стратегії бренд-маркетингу',
+          status: 'Очікує оцінки',
+          statusIdx: 0,
+          deadline: '12.07.2026',
+          price: 0,
+          type: 'review',
+          needsQuote: true
+        }
+      ]
+    };
+
+    // Chats history database
+    const chatHistories = {
+      'АС-4929': [
+        { sender: 'writer', text: "Вітаю! Отримав вашу тему та методичку. Почав аналізувати джерела та формувати вступну частину. Чи є специфічні побажання щодо плану роботи від керівника?" },
+        { sender: 'user', text: "Доброго дня! Так, викладач просив обов'язково включити статистику за 2024-2025 роки у розділ з практичним аналізом." },
+        { sender: 'writer', text: "Зрозумів. Якраз використовую свіжу аналітику Мінфіну та Нацбанку. Завтра зранку надішлю план на погодження." }
+      ],
+      'АС-4930': [
+        { sender: 'writer', text: "Привіт! Лабораторну роботу повністю закінчено. Код написаний на C++, структурований, додав коментарі до кожної функції. Будь ласка, перевірте роботу у вкладеному ZIP архіві." },
+        { sender: 'user', text: "Дуже дякую, зараз завантажу та подивлюсь." },
+        { sender: 'writer', text: "Якщо виникнуть питання з налаштуванням або компіляцією — одразу пишіть сюди, я онлайн!" }
+      ],
+      'АС-9821': [
+        { sender: 'user', text: "Вітаю! Мені потрібен реферат на 15 сторінок про стратегії бренд-маркетингу. Скільки це буде коштувати та коли зможете зробити?" },
+        { sender: 'writer', text: "Добрий день! Очікуйте, будь ласка, наразі ми оцінюємо обсяг та складність вашої теми." }
+      ]
+    };
+
+    // Client simulated replies
+    const clientAutoReplies = [
+      "Дякую за інформацію, очікую на результати.",
+      "Чудово! Перевірю файл найближчим часом та напишу вам.",
+      "Скажіть, чи вийде додати ще одну таблицю у другий розділ?",
+      "Усе виглядає професійно. Дякую за швидку відповідь!"
+    ];
+    let replyIdx = 0;
+
+    // Toast helper
+    function showToast(title, desc) {
+      const toast = document.getElementById('admin-toast');
+      document.getElementById('toast-title-text').innerText = title;
+      document.getElementById('toast-desc-text').innerText = desc;
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3500);
+    }
+
+    // Quick Login Autofill
+    function quickFill(role) {
+      if (role === 'writer') {
+        document.getElementById('login-email').value = 'writer@papermentor.com';
+        document.getElementById('login-password').value = 'writer123';
+      } else {
+        document.getElementById('login-email').value = 'admin@papermentor.com';
+        document.getElementById('login-password').value = 'admin123';
+      }
+    }
+
+    // Handle Login Flow
+    function handleLogin(event) {
+      event.preventDefault();
+      const email = document.getElementById('login-email').value;
+      
+      if (email.includes('admin')) {
+        adminState.role = 'admin';
+        document.getElementById('role-badge').innerText = 'Адміністратор';
+        document.getElementById('role-badge').className = 'px-2.5 py-0.5 text-[9px] font-extrabold rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 uppercase tracking-widest';
+      } else {
+        adminState.role = 'writer';
+        document.getElementById('role-badge').innerText = 'Виконавець';
+        document.getElementById('role-badge').className = 'px-2.5 py-0.5 text-[9px] font-extrabold rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase tracking-widest';
+      }
+
+      // Transition animation
+      document.getElementById('login-panel').classList.add('opacity-0', 'scale-95');
+      setTimeout(() => {
+        document.getElementById('login-panel').classList.add('hidden');
+        document.getElementById('dashboard-panel').classList.remove('hidden');
+        
+        renderOrders();
+        renderChatsList();
+        renderActiveChat();
+        
+        showToast('Вхід успішний!', `Ласкаво просимо до кабінету.`);
+      }, 300);
+    }
+
+    // Handle Logout
+    function handleLogout() {
+      document.getElementById('dashboard-panel').classList.add('hidden');
+      document.getElementById('login-panel').classList.remove('hidden', 'opacity-0', 'scale-95');
+      document.getElementById('login-panel').classList.add('opacity-100', 'scale-100');
+      showToast('Вихід з системи', 'Сесію успішно завершено.');
+    }
+
+    // Switch color themes
+    function changeTheme(themeName) {
+      document.body.classList.remove('theme-violet', 'theme-sunset', 'theme-emerald', 'theme-cyber-blue', 'theme-glacier', 'theme-harvard', 'theme-platinum');
+      if (themeName !== 'sunset') {
+        document.body.classList.add(`theme-${themeName}`);
+      }
+      
+      let themeTitle = 'Sunset Neon';
+      if (themeName === 'violet') themeTitle = 'Cosmic Violet';
+      if (themeName === 'emerald') themeTitle = 'Royal Emerald';
+      if (themeName === 'cyber-blue') themeTitle = 'Cyber Blue';
+      if (themeName === 'glacier') themeTitle = 'Arctic Glacier';
+      if (themeName === 'harvard') themeTitle = 'Crimson Gold';
+      if (themeName === 'platinum') themeTitle = 'Obsidian Platinum';
+      
+      showToast('Колір змінено!', `Встановлено палітру: ${themeTitle}`);
+    }
+
+    // Filter Orders by tabs
+    function filterOrders(tabName) {
+      adminState.currentTab = tabName;
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.className = 'tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-dark-slate border border-dark-border text-gray-400 hover:text-white transition-all';
+      });
+      document.getElementById(`tab-${tabName}`).className = 'tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-[var(--color-primary)] text-white transition-all';
+      
+      renderOrders();
+    }
+
+    // Render Orders Cards
+    function renderOrders() {
+      const container = document.getElementById('orders-list-container');
+      container.innerHTML = '';
+
+      const filtered = adminState.orders.filter(order => {
+        if (adminState.currentTab === 'all') return true;
+        return order.type === adminState.currentTab;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="bg-dark-slate border border-dark-border/40 rounded-2xl p-8 text-center text-gray-500 text-xs">
+            Немає замовлень у цій категорії.
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(order => {
+        const card = document.createElement('div');
+        const isActive = order.id === adminState.selectedOrderId;
+        const borderStyle = isActive ? 'border-[var(--color-primary)]/50 bg-dark-card/45' : 'border-dark-border/60';
+        card.className = `bg-dark-slate border ${borderStyle} rounded-2xl p-6 space-y-4 hover:border-gray-500/20 transition-all cursor-pointer`;
+        card.setAttribute('onclick', `selectActiveOrder('${order.id}', '${order.clientId}')`);
+
+        let statusBadgeClass = 'bg-opacity-15 bg-[var(--color-secondary)] text-[var(--color-secondary)] border border-[var(--color-secondary)]/25';
+        if (order.status.includes('перевірці')) {
+          statusBadgeClass = 'bg-opacity-15 bg-[var(--color-primary)] text-[var(--color-primary)] border border-[var(--color-primary)]/25';
+        } else if (order.status.includes('Очікує')) {
+          statusBadgeClass = 'bg-gray-500/15 text-gray-400 border border-gray-500/25';
+        } else if (order.status.includes('Завершено') || order.status.includes('Готово')) {
+          statusBadgeClass = 'bg-green-500/15 text-green-400 border border-green-500/25';
+        }
+
+        // Bidding interface or progress interface
+        let actionFormHtml = '';
+        if (order.needsQuote) {
+          actionFormHtml = `
+            <div class="pt-3 border-t border-dark-border/40 space-y-3" onclick="event.stopPropagation()">
+              <label class="block text-[10px] text-gray-500 uppercase tracking-wider font-bold">Оцінка вартості проекту:</label>
+              <div class="flex gap-2">
+                <input type="number" id="quote-${order.id}" placeholder="Введіть ціну (₴)" class="w-1/2 bg-dark-obsidian border border-dark-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[var(--color-primary)]">
+                <button onclick="submitPriceQuote('${order.id}')" class="w-1/2 py-2.5 rounded-xl bg-[var(--color-primary)] hover:bg-opacity-90 text-white font-bold text-xs shadow-md transition-colors">
+                  Надіслати оцінку
+                </button>
+              </div>
+            </div>
+          `;
+        } else if (order.statusIdx === 1) {
+          // In work: show Upload Draft option
+          actionFormHtml = `
+            <div class="pt-3 border-t border-dark-border/40 space-y-3" onclick="event.stopPropagation()">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] text-gray-500 uppercase tracking-wider font-bold">Завантаження проміжного звіту:</span>
+                <span id="upload-status-${order.id}" class="text-[9px] text-gray-400 font-semibold">Файл не обрано</span>
+              </div>
+              <div class="flex gap-3">
+                <button onclick="triggerUploadFile('${order.id}')" class="flex-1 py-2.5 bg-dark-obsidian border border-dark-border rounded-xl text-xs font-bold text-white hover:bg-dark-border transition-colors">
+                  Обрати ZIP / DOCX
+                </button>
+                <button onclick="uploadDraftDocument('${order.id}')" class="flex-1 py-2.5 bg-[var(--color-secondary)] hover:bg-opacity-90 rounded-xl text-xs font-bold text-white transition-colors shadow-md">
+                  Надіслати клієнту (50%)
+                </button>
+              </div>
+              <!-- Simulated Upload Progress Bar -->
+              <div id="progress-container-${order.id}" class="hidden w-full bg-dark-obsidian rounded-full h-1.5 overflow-hidden">
+                <div id="progress-bar-${order.id}" class="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] h-full w-0 transition-all duration-300"></div>
+              </div>
+            </div>
+          `;
+        } else if (order.statusIdx === 2) {
+          // Awaiting user review/approval: button to mark finished (simulation)
+          actionFormHtml = `
+            <div class="pt-3 border-t border-dark-border/40 flex justify-between items-center" onclick="event.stopPropagation()">
+              <span class="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Очікує підтвердження від клієнта</span>
+              <button onclick="simulateClientApproval('${order.id}')" class="px-5 py-2.5 bg-green-500 hover:bg-green-600 rounded-xl text-xs font-bold text-white transition-colors shadow-md">
+                Симулювати прийняття
+              </button>
+            </div>
+          `;
+        }
+
+        const stepsHtml = `
+          <div class="grid grid-cols-4 gap-2 pt-2 text-[9px] font-bold text-center text-gray-500">
+            <div class="space-y-1">
+              <span class="block w-full h-1.5 rounded ${order.statusIdx >= 0 ? 'bg-[var(--color-primary)]' : 'bg-dark-border'}"></span>
+              <span class="${order.statusIdx >= 0 ? 'text-[var(--color-primary)]' : ''}">ТЗ створено</span>
+            </div>
+            <div class="space-y-1">
+              <span class="block w-full h-1.5 rounded ${order.statusIdx >= 1 ? 'bg-[var(--color-primary)]' : 'bg-dark-border'}"></span>
+              <span class="${order.statusIdx >= 1 ? 'text-[var(--color-primary)]' : ''}">В роботі</span>
+            </div>
+            <div class="space-y-1">
+              <span class="block w-full h-1.5 rounded ${order.statusIdx >= 2 ? 'bg-[var(--color-primary)]' : 'bg-dark-border'}"></span>
+              <span class="${order.statusIdx >= 2 ? 'text-[var(--color-primary)]' : ''}">На перевірці</span>
+            </div>
+            <div class="space-y-1">
+              <span class="block w-full h-1.5 rounded ${order.statusIdx >= 3 ? 'bg-[var(--color-primary)]' : 'bg-dark-border'}"></span>
+              <span class="${order.statusIdx >= 3 ? 'text-[var(--color-primary)]' : ''}">Завершено</span>
+            </div>
+          </div>
+        `;
+
+        card.innerHTML = `
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+            <div>
+              <span class="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Замовлення №${order.id} • Клієнт ID:${order.clientId}</span>
+              <h4 class="text-base font-bold text-white">${order.title}</h4>
+            </div>
+            <span class="px-2.5 py-1 text-[10px] font-bold rounded ${statusBadgeClass}">${order.status}</span>
+          </div>
+
+          ${stepsHtml}
+
+          <div class="flex justify-between items-center text-xs text-gray-400">
+            <span>Дедлайн: <strong class="text-white">${order.deadline}</strong></span>
+            <span>Бюджет: <strong class="text-[var(--color-secondary)]">${order.price > 0 ? order.price + ' ₴' : 'оцінюється'}</strong></span>
+          </div>
+
+          ${actionFormHtml}
+        `;
+        
+        container.appendChild(card);
+      });
+    }
+
+    // Submit Price quote for awaiting order
+    function submitPriceQuote(orderId) {
+      const quoteVal = parseFloat(document.getElementById(`quote-${orderId}`).value);
+      if (isNaN(quoteVal) || quoteVal <= 0) {
+        alert('Будь ласка, введіть коректну ціну замовлення.');
+        return;
+      }
+
+      const order = adminState.orders.find(o => o.id === orderId);
+      if (order) {
+        order.price = quoteVal;
+        order.needsQuote = false;
+        order.status = 'В роботі';
+        order.statusIdx = 1;
+        order.type = 'in_work';
+
+        // Update stats
+        adminState.activeOrders++;
+        document.getElementById('stat-active').innerText = adminState.activeOrders;
+
+        // Initialize empty chat welcome
+        chatHistories[orderId].push({ sender: 'writer', text: `Вітаю! Наш менеджер оцінив роботу. Бюджет встановлено: ${quoteVal} ₴. Я приступаю до написання.` });
+
+        renderOrders();
+        renderChatsList();
+        renderActiveChat();
+        showToast('Оцінку надіслано!', `Замовлення ${orderId} переведено у статус "В роботі".`);
+      }
+    }
+
+    // Trigger local uploader click
+    function triggerUploadFile(orderId) {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.zip,.rar,.docx,.pdf';
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          document.getElementById(`upload-status-${orderId}`).innerText = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+          document.getElementById(`upload-status-${orderId}`).classList.className = 'text-[9px] text-[var(--color-secondary)] font-bold';
+        }
+      };
+      input.click();
+    }
+
+    // Upload draft file uploader simulation
+    function uploadDraftDocument(orderId) {
+      const fileLabel = document.getElementById(`upload-status-${orderId}`).innerText;
+      if (fileLabel.includes('не обрано')) {
+        alert('Будь ласка, спочатку оберіть файл роботи на пристрої.');
+        return;
+      }
+
+      const bar = document.getElementById(`progress-bar-${orderId}`);
+      const container = document.getElementById(`progress-container-${orderId}`);
+      
+      container.classList.remove('hidden');
+      bar.style.width = '0%';
+
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 20;
+        bar.style.width = `${progress}%`;
+        if (progress >= 100) {
+          clearInterval(interval);
+          
+          setTimeout(() => {
+            const order = adminState.orders.find(o => o.id === orderId);
+            if (order) {
+              order.status = 'На вашій перевірці';
+              order.statusIdx = 2;
+              order.type = 'in_work';
+
+              // Push file message to chat history
+              chatHistories[orderId].push({ sender: 'writer', text: `📎 Надіслано файл: ${fileLabel}. Очікую вашої перевірки та погодження половини оплати.` });
+              
+              renderOrders();
+              renderActiveChat();
+              showToast('Файл надіслано!', `Демо-версію по ${orderId} завантажено та відправлено клієнту.`);
+            }
+          }, 400);
+        }
+      }, 200);
+    }
+
+    // Simulate client accepting finished paper
+    function simulateClientApproval(orderId) {
+      const order = adminState.orders.find(o => o.id === orderId);
+      if (order) {
+        order.status = 'Завершено';
+        order.statusIdx = 3;
+        order.type = 'done';
+
+        // Add earnings
+        adminState.earnings += order.price;
+        adminState.activeOrders--;
+        adminState.completedOrders++;
+
+        document.getElementById('stat-earnings').innerText = adminState.earnings.toLocaleString('uk-UA') + ' ₴';
+        document.getElementById('stat-active').innerText = adminState.activeOrders;
+        document.getElementById('stat-completed').innerText = adminState.completedOrders;
+
+        chatHistories[orderId].push({ sender: 'user', text: `Дякую! Робота перевірена, все виконано супер. Залишок балансу перераховано. Проект прийнято!` });
+
+        renderOrders();
+        renderActiveChat();
+        showToast('Проект затверджено!', `Баланс поповнено на +${order.price} ₴.`);
+      }
+    }
+
+    // Select active order and swap chat
+    function selectActiveOrder(orderId, clientId) {
+      adminState.selectedOrderId = orderId;
+      adminState.selectedClientId = clientId;
+
+      renderOrders();
+      renderChatsList();
+      renderActiveChat();
+    }
+
+    // Render Conversation List (Left side of chat box)
+    function renderChatsList() {
+      const container = document.getElementById('chats-list-container');
+      container.innerHTML = '';
+
+      adminState.orders.forEach(order => {
+        const isActive = order.id === adminState.selectedOrderId;
+        const activeClass = isActive ? 'bg-dark-slate/60 border-l-2 border-[var(--color-primary)]' : '';
+        const item = document.createElement('div');
+        item.className = `p-3 space-y-1 cursor-pointer transition-colors ${activeClass}`;
+        item.setAttribute('onclick', `selectActiveOrder('${order.id}', '${order.clientId}')`);
+
+        const history = chatHistories[order.id] || [];
+        const lastMsg = history.length > 0 ? history[history.length - 1].text : 'Немає повідомлень...';
+
+        item.innerHTML = `
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-white text-[11px] truncate w-[75%]">${order.clientName}</span>
+            <span class="text-[8px] text-[var(--color-secondary)] font-extrabold tracking-tight">${order.id}</span>
+          </div>
+          <p class="text-[10px] text-gray-500 truncate leading-snug">${lastMsg}</p>
+        `;
+        
+        container.appendChild(item);
+      });
+    }
+
+    // Render current active dialogue messages
+    function renderActiveChat() {
+      const activeId = adminState.selectedOrderId;
+      const order = adminState.orders.find(o => o.id === activeId);
+      if (!order) return;
+
+      const header = document.getElementById('active-chat-header');
+      header.innerHTML = `
+        <div class="flex items-center gap-2.5">
+          <div class="w-8.5 h-8.5 rounded-full bg-opacity-15 bg-[var(--color-primary)] flex items-center justify-center text-[var(--color-primary)] font-bold text-xs border border-[var(--color-primary)]/25">
+            ${order.clientName.charAt(0)}
+          </div>
+          <div>
+            <div class="text-xs font-bold text-white">${order.clientName}</div>
+            <div class="text-[8px] text-gray-500">Замовлення ${order.id} • ${order.status}</div>
+          </div>
+        </div>
+        <span class="flex items-center gap-1.5 text-[9px] text-green-400 font-bold">
+          <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+          Клієнт онлайн
+        </span>
+      `;
+
+      const msgContainer = document.getElementById('messages-container');
+      msgContainer.innerHTML = '';
+
+      const history = chatHistories[activeId] || [];
+      history.forEach(msg => {
+        const row = document.createElement('div');
+        if (msg.sender === 'writer') {
+          // Sender is the writer (Right alignment)
+          row.className = 'flex gap-2 items-start max-w-[85%] ml-auto justify-end';
+          row.innerHTML = `
+            <div class="bg-opacity-80 bg-[var(--color-primary)] rounded-2xl rounded-tr-none p-3 text-xs text-white leading-relaxed">
+              ${msg.text}
+            </div>
+          `;
+        } else {
+          // Sender is the client (Left alignment)
+          row.className = 'flex gap-2 items-start max-w-[85%]';
+          row.innerHTML = `
+            <div class="w-7 h-7 rounded-full bg-opacity-15 bg-[var(--color-secondary)] flex items-center justify-center text-[var(--color-secondary)] font-bold text-[10px] flex-shrink-0 border border-[var(--color-secondary)]/20">
+              ${order.clientName.charAt(0)}
+            </div>
+            <div class="bg-dark-card rounded-2xl rounded-tl-none p-3 text-xs text-white leading-relaxed border border-dark-border/40">
+              ${msg.text}
+            </div>
+          `;
+        }
+        msgContainer.appendChild(row);
+      });
+
+      msgContainer.scrollTop = msgContainer.scrollHeight;
+    }
+
+    // Writer sends message
+    function handleSendAdminMessage(event) {
+      event.preventDefault();
+      const input = document.getElementById('admin-chat-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const activeId = adminState.selectedOrderId;
+      const order = adminState.orders.find(o => o.id === activeId);
+      if (!order) return;
+
+      // Add to database
+      chatHistories[activeId].push({ sender: 'writer', text: text });
+      renderActiveChat();
+      renderChatsList();
+      input.value = '';
+
+      // Client simulation response triggers after 1.5 seconds
+      setTimeout(() => {
+        const container = document.getElementById('messages-container');
+        if (!container) return;
+
+        const typingMsg = document.createElement('div');
+        typingMsg.className = 'flex gap-2 items-start max-w-[85%]';
+        typingMsg.innerHTML = `
+          <div class="w-7 h-7 rounded-full bg-opacity-15 bg-[var(--color-secondary)] flex items-center justify-center text-[var(--color-secondary)] font-bold text-[10px] flex-shrink-0 border border-[var(--color-secondary)]/20">
+            ${order.clientName.charAt(0)}
+          </div>
+          <div class="bg-dark-card rounded-2xl rounded-tl-none p-3 text-xs text-white border border-dark-border/40 animate-pulse">
+            Клієнт друкує відповідь...
+          </div>
+        `;
+        container.appendChild(typingMsg);
+        container.scrollTop = container.scrollHeight;
+
+        setTimeout(() => {
+          const clientText = clientAutoReplies[replyIdx % clientAutoReplies.length];
+          replyIdx++;
+
+          // Push to history
+          chatHistories[activeId].push({ sender: 'user', text: clientText });
+
+          // Render
+          renderActiveChat();
+          renderChatsList();
+        }, 1500);
+
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
