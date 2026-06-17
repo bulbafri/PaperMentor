@@ -208,6 +208,19 @@
     .nav-pill:hover::after, .nav-pill.active::after {
       width: 100%;
     }
+    .logo-gradient-border {
+      background: var(--gradient-bg);
+    }
+    .logo-icon-color {
+      stroke: var(--color-primary);
+      width: 22px;
+      height: 22px;
+    }
+    .logo-icon-color-small {
+      stroke: var(--color-primary);
+      width: 18px;
+      height: 18px;
+    }
   </style>
 </head>
 <body class="font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-opacity-80 selection:bg-[var(--color-primary)] selection:text-white relative">
@@ -243,9 +256,9 @@
       <div class="flex items-center justify-between h-20">
         <!-- Logo -->
         <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
-          <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-[var(--color-primary)] to-[var(--color-secondary)] p-[1px] shadow-lg shadow-[var(--color-primary)]/20 flex items-center justify-center">
+          <div class="w-11 h-11 rounded-xl logo-gradient-border p-[1px] shadow-lg flex items-center justify-center" style="box-shadow: 0 10px 15px -3px rgba(var(--color-primary-rgb), 0.25);">
             <div class="w-full h-full bg-dark-obsidian rounded-xl flex items-center justify-center">
-              <svg class="w-5.5 h-5.5 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg class="logo-icon-color" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
               </svg>
             </div>
@@ -1328,8 +1341,8 @@
               <!-- Chat input form -->
               <form id="chat-input-form" onsubmit="handleSendMessage(event)" class="bg-dark-card p-3 border-t border-dark-border flex gap-2">
                 <input type="text" id="chat-input" placeholder="Напишіть повідомлення автору..." class="flex-grow bg-dark-slate border border-dark-border rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[var(--color-primary)] placeholder-gray-600">
-                <button type="submit" class="w-11 h-11 rounded-xl bg-[var(--color-primary)] text-white flex items-center justify-center transition-colors">
-                  <svg class="w-5.5 h-5.5 transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                <button type="submit" style="background-color: var(--color-primary);" class="w-11 h-11 rounded-xl text-white flex items-center justify-center transition-colors hover:brightness-110">
+                  <svg class="w-5 h-5 transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                 </button>
               </form>
             </div>
@@ -1348,9 +1361,9 @@
         <!-- Logo and details -->
         <div class="md:col-span-5 space-y-4">
           <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
-            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-[var(--color-primary)] to-[var(--color-secondary)] p-[1px] flex items-center justify-center">
+            <div class="w-9 h-9 rounded-xl logo-gradient-border p-[1px] flex items-center justify-center">
               <div class="w-full h-full bg-dark-obsidian rounded-xl flex items-center justify-center">
-                <svg class="w-4.5 h-4.5 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg class="logo-icon-color-small" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                 </svg>
               </div>
@@ -1459,8 +1472,8 @@
   <!-- Notification Toast -->
   <div id="notification-toast" class="fixed bottom-6 right-6 z-[120] transform translate-y-24 opacity-0 pointer-events-none transition-all duration-300">
     <div class="bg-dark-card border border-[var(--color-primary)]/30 rounded-2xl p-4.5 shadow-2xl flex items-center gap-4 max-w-sm">
-      <div class="w-10 h-10 rounded-xl bg-opacity-15 bg-[var(--color-primary)] flex items-center justify-center text-[var(--color-primary)] shadow-inner border border-[var(--color-primary)]/20">
-        <svg class="w-5.5 h-5.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div style="background-color: rgba(var(--color-primary-rgb), 0.15); color: var(--color-primary); border-color: rgba(var(--color-primary-rgb), 0.2);" class="w-10 h-10 rounded-xl flex items-center justify-center shadow-inner border">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
         </svg>
       </div>
