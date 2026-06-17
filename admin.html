@@ -223,18 +223,6 @@
         <p class="text-xs text-gray-400">Авторизуйтеся для роботи з проектами та чатами клієнтів</p>
       </div>
 
-      <!-- Quick Fill Buttons -->
-      <div class="bg-dark-obsidian/60 border border-dark-border/40 rounded-2xl p-4.5 space-y-2">
-        <span class="block text-[10px] font-extrabold uppercase tracking-widest text-gray-500 text-center">Швидкий вхід для тесту:</span>
-        <div class="grid grid-cols-2 gap-2.5">
-          <button onclick="quickFill('writer')" class="py-2.5 rounded-xl bg-dark-slate hover:bg-dark-card border border-dark-border hover:border-[var(--color-primary)] text-[10px] font-bold text-white transition-colors">
-            Дмитро (Доцент)
-          </button>
-          <button onclick="quickFill('admin')" class="py-2.5 rounded-xl bg-dark-slate hover:bg-dark-card border border-dark-border hover:border-[var(--color-secondary)] text-[10px] font-bold text-white transition-colors">
-            Адміністрація
-          </button>
-        </div>
-      </div>
 
       <!-- Login Form -->
       <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -795,16 +783,6 @@
       showToast('Колір змінено!', "Встановлено палітру: " + themeTitle);
     }
 
-    // Quick Login autofill form inputs
-    function quickFill(role) {
-      if (role === 'writer') {
-        document.getElementById('login-email').value = 'writer@papermentor.com';
-        document.getElementById('login-password').value = 'writer123';
-      } else {
-        document.getElementById('login-email').value = 'bulbafri@papermentor.com';
-        document.getElementById('login-password').value = 'admin123';
-      }
-    }
 
     // Handle credentials validation
     function handleLogin(event) {
