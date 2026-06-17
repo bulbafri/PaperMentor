@@ -210,28 +210,31 @@
     }
   </style>
 </head>
-<body class="font-sans antialiased overflow-x-hidden min-h-screen flex flex-col justify-between selection:bg-opacity-80 selection:bg-[var(--color-primary)] selection:text-white">
+<body class="font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-opacity-80 selection:bg-[var(--color-primary)] selection:text-white relative">
 
-  <!-- Glow Background Spheres -->
-  <div class="absolute top-[8%] left-[-15%] w-[450px] h-[450px] bg-opacity-10 bg-[var(--color-primary)] glow-sphere"></div>
-  <div class="absolute top-[35%] right-[-15%] w-[500px] h-[500px] bg-opacity-5 bg-[var(--color-secondary)] glow-sphere"></div>
-  <div class="absolute bottom-[15%] left-[15%] w-[400px] h-[400px] bg-opacity-5 bg-[var(--color-primary)] glow-sphere"></div>
+  <!-- Background Glow & Symbols Wrapper (prevents horizontal overflow and allows correct position: sticky on mobile Safari) -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+    <!-- Glow Background Spheres -->
+    <div class="absolute top-[8%] left-[-15%] w-[450px] h-[450px] bg-opacity-10 bg-[var(--color-primary)] glow-sphere"></div>
+    <div class="absolute top-[35%] right-[-15%] w-[500px] h-[500px] bg-opacity-5 bg-[var(--color-secondary)] glow-sphere"></div>
+    <div class="absolute bottom-[15%] left-[15%] w-[400px] h-[400px] bg-opacity-5 bg-[var(--color-primary)] glow-sphere"></div>
 
-  <!-- Background Floating Academic Symbols (Quirks/Приколы) -->
-  <div class="absolute top-[18%] left-[8%] float-1 opacity-10 text-[var(--color-primary)] text-4xl font-extrabold pointer-events-none select-none">∫</div>
-  <div class="absolute top-[15%] right-[25%] float-2 opacity-15 text-[var(--color-secondary)] text-3xl font-bold pointer-events-none select-none">π</div>
-  <div class="absolute top-[45%] left-[20%] float-3 opacity-10 text-[var(--color-primary)] text-5xl font-black pointer-events-none select-none">Σ</div>
-  <div class="absolute top-[50%] right-[8%] float-1 opacity-15 text-[var(--color-primary)] text-2xl font-bold pointer-events-none select-none">E = mc²</div>
-  <div class="absolute bottom-[30%] left-[10%] float-2 opacity-10 text-[var(--color-secondary)] text-4xl font-mono pointer-events-none select-none">{ ... }</div>
-  <div class="absolute bottom-[25%] right-[22%] float-3 opacity-15 text-[var(--color-primary)] text-3xl font-extrabold pointer-events-none select-none">Δy/Δx</div>
-  
-  <div class="absolute top-[28%] left-[45%] float-2 opacity-5 pointer-events-none select-none">
-    <!-- SVG Graduation Cap -->
-    <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479L12 20l-6.825-3.057a12.082 12.082 0 01.665-6.48L12 14z"></path></svg>
-  </div>
-  <div class="absolute bottom-[40%] left-[4%] float-1 opacity-5 pointer-events-none select-none">
-    <!-- SVG Molecule -->
-    <svg class="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 9.172V5L8 4z"></path></svg>
+    <!-- Background Floating Academic Symbols (Quirks/Приколы) -->
+    <div class="absolute top-[18%] left-[8%] float-1 opacity-10 text-[var(--color-primary)] text-4xl font-extrabold pointer-events-none select-none">∫</div>
+    <div class="absolute top-[15%] right-[25%] float-2 opacity-15 text-[var(--color-secondary)] text-3xl font-bold pointer-events-none select-none">π</div>
+    <div class="absolute top-[45%] left-[20%] float-3 opacity-10 text-[var(--color-primary)] text-5xl font-black pointer-events-none select-none">Σ</div>
+    <div class="absolute top-[50%] right-[8%] float-1 opacity-15 text-[var(--color-primary)] text-2xl font-bold pointer-events-none select-none">E = mc²</div>
+    <div class="absolute bottom-[30%] left-[10%] float-2 opacity-10 text-[var(--color-secondary)] text-4xl font-mono pointer-events-none select-none">{ ... }</div>
+    <div class="absolute bottom-[25%] right-[22%] float-3 opacity-15 text-[var(--color-primary)] text-3xl font-extrabold pointer-events-none select-none">Δy/Δx</div>
+    
+    <div class="absolute top-[28%] left-[45%] float-2 opacity-5 pointer-events-none select-none">
+      <!-- SVG Graduation Cap -->
+      <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479L12 20l-6.825-3.057a12.082 12.082 0 01.665-6.48L12 14z"></path></svg>
+    </div>
+    <div class="absolute bottom-[40%] left-[4%] float-1 opacity-5 pointer-events-none select-none">
+      <!-- SVG Molecule -->
+      <svg class="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 9.172V5L8 4z"></path></svg>
+    </div>
   </div>
 
   <!-- Header -->

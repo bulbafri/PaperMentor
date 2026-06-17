@@ -183,19 +183,22 @@
     }
   </style>
 </head>
-<body class="font-sans antialiased overflow-x-hidden min-h-screen flex flex-col justify-between selection:bg-opacity-80 selection:bg-[var(--color-primary)] selection:text-white">
+<body class="font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-opacity-80 selection:bg-[var(--color-primary)] selection:text-white relative">
 
-  <!-- Glow Background Spheres -->
-  <div class="absolute top-[8%] left-[-15%] w-[450px] h-[450px] bg-opacity-10 bg-[var(--color-primary)] glow-sphere"></div>
-  <div class="absolute top-[35%] right-[-15%] w-[500px] h-[500px] bg-opacity-5 bg-[var(--color-secondary)] glow-sphere"></div>
-  <div class="absolute bottom-[15%] left-[15%] w-[400px] h-[400px] bg-opacity-5 bg-[var(--color-primary)] glow-sphere"></div>
+  <!-- Background Glow & Symbols Wrapper (prevents horizontal overflow) -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+    <!-- Glow Background Spheres -->
+    <div class="absolute top-[8%] left-[-15%] w-[450px] h-[450px] bg-opacity-10 bg-[var(--color-primary)] glow-sphere"></div>
+    <div class="absolute top-[35%] right-[-15%] w-[500px] h-[500px] bg-opacity-5 bg-[var(--color-secondary)] glow-sphere"></div>
+    <div class="absolute bottom-[15%] left-[15%] w-[400px] h-[400px] bg-opacity-5 bg-[var(--color-primary)] glow-sphere"></div>
 
-  <!-- Background Floating Academic Symbols -->
-  <div class="absolute top-[18%] left-[8%] float-1 opacity-10 text-[var(--color-primary)] text-4xl font-extrabold pointer-events-none select-none">∫</div>
-  <div class="absolute top-[15%] right-[25%] float-2 opacity-15 text-[var(--color-secondary)] text-3xl font-bold pointer-events-none select-none">π</div>
-  <div class="absolute top-[45%] left-[20%] float-3 opacity-10 text-[var(--color-primary)] text-5xl font-black pointer-events-none select-none">Σ</div>
-  <div class="absolute bottom-[30%] left-[10%] float-2 opacity-10 text-[var(--color-secondary)] text-4xl font-mono pointer-events-none select-none">{ ... }</div>
-  <div class="absolute bottom-[25%] right-[22%] float-3 opacity-15 text-[var(--color-primary)] text-3xl font-extrabold pointer-events-none select-none">Δy/Δx</div>
+    <!-- Background Floating Academic Symbols -->
+    <div class="absolute top-[18%] left-[8%] float-1 opacity-10 text-[var(--color-primary)] text-4xl font-extrabold pointer-events-none select-none">∫</div>
+    <div class="absolute top-[15%] right-[25%] float-2 opacity-15 text-[var(--color-secondary)] text-3xl font-bold pointer-events-none select-none">π</div>
+    <div class="absolute top-[45%] left-[20%] float-3 opacity-10 text-[var(--color-primary)] text-5xl font-black pointer-events-none select-none">Σ</div>
+    <div class="absolute bottom-[30%] left-[10%] float-2 opacity-10 text-[var(--color-secondary)] text-4xl font-mono pointer-events-none select-none">{ ... }</div>
+    <div class="absolute bottom-[25%] right-[22%] float-3 opacity-15 text-[var(--color-primary)] text-3xl font-extrabold pointer-events-none select-none">Δy/Δx</div>
+  </div>
 
   <!-- Main Gateway Container -->
   <main class="flex-grow flex items-center justify-center relative z-10 py-12 px-4 sm:px-6 lg:px-8">
