@@ -305,6 +305,9 @@
             </div>
           </div>
           
+          <!-- Auth / Profile Area -->
+          <div id="auth-header-area" class="flex items-center gap-3"></div>
+
           <button onclick="scrollToOrderForm()" class="px-6 py-3 rounded-xl bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white text-sm font-bold transition-all transform hover:-translate-y-0.5 shadow-lg shadow-[var(--color-primary)]/20 hover:shadow-[var(--color-primary)]/40">
             Швидке замовлення
           </button>
@@ -327,6 +330,10 @@
       <button onclick="navigateTo('home'); toggleMobileMenu()" class="block w-full text-left px-3 py-2.5 rounded-lg text-base font-semibold text-white hover:bg-dark-border">Головна</button>
       <button onclick="navigateTo('catalog'); toggleMobileMenu()" class="block w-full text-left px-3 py-2.5 rounded-lg text-base font-semibold text-gray-400 hover:text-white hover:bg-dark-border">Каталог готових робіт</button>
       <button onclick="navigateTo('cabinet'); toggleMobileMenu()" class="block w-full text-left px-3 py-2.5 rounded-lg text-base font-semibold text-gray-400 hover:text-white hover:bg-dark-border">Особистий кабінет</button>
+      
+      <!-- Mobile Auth Area -->
+      <div id="auth-mobile-area" class="pt-2 pb-1 border-b border-dark-border/40 mb-2"></div>
+
       <button onclick="scrollToOrderForm(); toggleMobileMenu()" class="block w-full text-center px-4 py-3.5 rounded-xl text-base font-bold bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white shadow-lg">Замовити роботу</button>
       
       <!-- Mobile Theme Selector -->
@@ -1395,8 +1402,59 @@
     </div>
   </footer>
 
+  <!-- AUTHENTICATION MODAL -->
+  <div id="auth-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-dark-obsidian/85 backdrop-blur-md hidden transition-all duration-300">
+    <div class="relative w-full max-w-md bg-dark-slate border border-dark-border/80 rounded-3xl p-8 space-y-6 shadow-2xl overflow-hidden">
+      <!-- Glow element -->
+      <div class="absolute -top-10 -right-10 w-32 h-32 bg-[var(--color-primary)] opacity-10 rounded-full blur-2xl"></div>
+      
+      <!-- Close button -->
+      <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-500 hover:text-white focus:outline-none text-2xl font-bold">&times;</button>
+      
+      <!-- Modal Header -->
+      <div class="text-center space-y-2">
+        <h3 id="auth-modal-title" class="text-2xl font-extrabold text-white font-display">Вхід у кабінет</h3>
+        <p id="auth-modal-desc" class="text-xs text-gray-400">Увійдіть для перегляду та керування своїми замовленнями</p>
+      </div>
+
+      <!-- Auth Error message -->
+      <div id="auth-error-msg" class="hidden text-xs text-red-400 bg-red-500/10 border border-red-500/25 rounded-xl p-3 text-center"></div>
+
+      <!-- Auth Form -->
+      <form id="auth-modal-form" onsubmit="handleAuthSubmit(event)" class="space-y-4">
+        <!-- Name (Hidden in login mode) -->
+        <div id="auth-field-name" class="space-y-1 hidden">
+          <label class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Ваше ім'я</label>
+          <input type="text" id="auth-name" placeholder="Дмитро К." class="w-full bg-dark-obsidian border border-dark-border rounded-xl px-4 py-3.5 text-xs text-white focus:outline-none focus:border-[var(--color-primary)] transition-all">
+        </div>
+        
+        <!-- Email -->
+        <div class="space-y-1">
+          <label class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Електронна пошта</label>
+          <input type="email" id="auth-email" required placeholder="student@example.com" class="w-full bg-dark-obsidian border border-dark-border rounded-xl px-4 py-3.5 text-xs text-white focus:outline-none focus:border-[var(--color-primary)] transition-all">
+        </div>
+        
+        <!-- Password -->
+        <div class="space-y-1">
+          <label class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Пароль</label>
+          <input type="password" id="auth-password" required placeholder="••••••••" class="w-full bg-dark-obsidian border border-dark-border rounded-xl px-4 py-3.5 text-xs text-white focus:outline-none focus:border-[var(--color-primary)] transition-all">
+        </div>
+
+        <button type="submit" id="auth-submit-btn" class="w-full py-4 rounded-xl bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white font-bold text-sm transition-all transform hover:-translate-y-0.5 shadow-lg shadow-[var(--color-primary)]/10">
+          Увійти в кабінет
+        </button>
+      </form>
+
+      <!-- Toggle mode links -->
+      <div class="text-center text-xs text-gray-500">
+        <span id="auth-toggle-text">Ще немає кабінету?</span>
+        <button onclick="toggleAuthMode()" id="auth-toggle-btn" class="text-[var(--color-primary)] hover:underline ml-1 font-bold">Створити кабінет</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Notification Toast -->
-  <div id="notification-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 pointer-events-none transition-all duration-300">
+  <div id="notification-toast" class="fixed bottom-6 right-6 z-[120] transform translate-y-24 opacity-0 pointer-events-none transition-all duration-300">
     <div class="bg-dark-card border border-[var(--color-primary)]/30 rounded-2xl p-4.5 shadow-2xl flex items-center gap-4 max-w-sm">
       <div class="w-10 h-10 rounded-xl bg-opacity-15 bg-[var(--color-primary)] flex items-center justify-center text-[var(--color-primary)] shadow-inner border border-[var(--color-primary)]/20">
         <svg class="w-5.5 h-5.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1412,6 +1470,100 @@
 
   <!-- Javascript Logic -->
   <script>
+    // Local client-side DB wrapper
+    const DB = {
+      get(key, defaultVal) {
+        const data = localStorage.getItem(key);
+        if (!data) return defaultVal;
+        try {
+          return JSON.parse(data);
+        } catch(e) {
+          return defaultVal;
+        }
+      },
+      set(key, val) {
+        localStorage.setItem(key, JSON.stringify(val));
+        // Force trigger storage event manually in current window as well
+        window.dispatchEvent(new Event('storage'));
+      },
+      init() {
+        if (!localStorage.getItem('pm_writers')) {
+          this.set('pm_writers', [
+            { id: 'writer-dmitro', name: 'Дмитро (Доцент)', title: 'Кандидат екон. наук', specialization: 'Макроекономіка, Фінанси', rating: 4.95, completedCount: 50, activeOrdersCount: 1 },
+            { id: 'writer-oleksiy', name: 'Олексій (Сеньйор)', title: 'Сеньйор Розробник', specialization: 'C++, Алгоритми, Java', rating: 4.88, completedCount: 32, activeOrdersCount: 1 },
+            { id: 'writer-olena', name: 'Олена (Кандидат)', title: 'Кандидат філол. наук', specialization: 'Англійська філологія, Маркетинг', rating: 4.97, completedCount: 78, activeOrdersCount: 0 }
+          ]);
+        }
+        if (!localStorage.getItem('pm_users')) {
+          this.set('pm_users', [
+            { email: 'bulbafri@papermentor.com', name: 'bulbafri', password: 'admin123', role: 'admin', balance: 5000 },
+            { email: 'admin@papermentor.com', name: 'Адміністратор', password: 'admin123', role: 'admin', balance: 10000 },
+            { email: 'writer@papermentor.com', name: 'Дмитро (Доцент)', password: 'writer123', role: 'writer', writerId: 'writer-dmitro', balance: 18450 },
+            { email: 'oleksiy@papermentor.com', name: 'Олексій (Сеньйор)', password: 'writer123', role: 'writer', writerId: 'writer-oleksiy', balance: 9400 },
+            { email: 'student@example.com', name: 'Дмитро К.', password: 'student123', role: 'student', balance: 2500 }
+          ]);
+        }
+        if (!localStorage.getItem('pm_orders')) {
+          this.set('pm_orders', [
+            {
+              id: 'АС-4929',
+              clientEmail: 'student@example.com',
+              clientName: 'Дмитро К.',
+              title: 'Курсова робота з макроекономіки',
+              subject: 'Макроекономіка',
+              pages: 30,
+              price: 2200,
+              status: 'В процесі написання',
+              statusIdx: 1,
+              writerId: 'writer-dmitro',
+              deadline: '24.06.2026',
+              files: []
+            },
+            {
+              id: 'АС-4930',
+              clientEmail: 'student@example.com',
+              clientName: 'Дмитро К.',
+              title: 'Лабораторна робота з алгоритмів на C++',
+              subject: 'Програмування C++',
+              pages: 12,
+              price: 1500,
+              status: 'На вашій перевірці',
+              statusIdx: 2,
+              writerId: 'writer-oleksiy',
+              deadline: '20.06.2026',
+              files: ['ТЗ_v1.zip']
+            }
+          ]);
+        }
+        if (!localStorage.getItem('pm_messages')) {
+          this.set('pm_messages', [
+            { orderId: 'АС-4929', sender: 'writer', senderName: 'Дмитро (Доцент)', text: "Вітаю! Отримав вашу тему та методичку. Почав аналізувати джерела та формувати вступну частину. Чи є специфічні побажання щодо плану роботи від керівника?", timestamp: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString() },
+            { orderId: 'АС-4929', sender: 'student', senderName: 'Дмитро К.', text: "Доброго дня! Так, викладач просив обов'язково включити статистику за 2024-2025 роки у розділ з практичним аналізом.", timestamp: new Date(Date.now() - 1000 * 60 * 60 * 4.5).toISOString() },
+            { orderId: 'АС-4929', sender: 'writer', senderName: 'Дмитро (Доцент)', text: "Зрозумів. Якраз використовую свіжу аналітику Мінфіну та Нацбанку. Завтра зранку надішлю план на погодження.", timestamp: new Date(Date.now() - 1000 * 60 * 60 * 4).toISOString() },
+            { orderId: 'АС-4930', sender: 'writer', senderName: 'Олексій (Сеньйор)', text: "Привіт! Лабораторну роботу повністю закінчено. Код написаний на C++, структурований, додав коментарі до кожної функції. Будь ласка, перевірте роботу у вкладеному ZIP архіві.", timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString() },
+            { orderId: 'АС-4930', sender: 'student', senderName: 'Дмитро К.', text: "Дуже дякую, зараз завантажу та подивлюсь.", timestamp: new Date(Date.now() - 1000 * 60 * 60 * 1.5).toISOString() },
+            { orderId: 'АС-4930', sender: 'writer', senderName: 'Олексій (Сеньйор)', text: "Якщо виникнуть питання з налаштуванням або компіляцією — одразу пишіть сюди, я онлайн!", timestamp: new Date(Date.now() - 1000 * 60 * 60 * 1).toISOString() }
+          ]);
+        }
+      }
+    };
+
+    // Initialize database
+    DB.init();
+
+    // Session State
+    let currentSession = DB.get('pm_session', null);
+    let authMode = 'login'; // 'login' | 'register'
+    let tempPendingOrder = null;
+    let tempPendingCatalogPurchase = null;
+
+    // Local client cabinet state
+    const cabinetState = {
+      balance: 0,
+      activeOrderId: null,
+      orders: []
+    };
+
     // Theme Customizer Logic
     function changeTheme(themeName) {
       document.body.classList.remove('theme-violet', 'theme-sunset', 'theme-emerald', 'theme-cyber-blue', 'theme-glacier', 'theme-harvard', 'theme-platinum');
@@ -1433,6 +1585,11 @@
 
     // Navigation / Router Logic
     function navigateTo(pageId) {
+      if (pageId === 'cabinet' && !currentSession) {
+        showAuthModal('login');
+        return;
+      }
+
       document.querySelectorAll('.page-section').forEach(section => {
         section.classList.add('hidden');
       });
@@ -1527,6 +1684,7 @@
     // Price Calculator Logic
     function calculatePrice() {
       const typeSelect = document.getElementById('calc-type');
+      if (!typeSelect) return;
       const selectedOption = typeSelect.options[typeSelect.selectedIndex];
       const basePrice = parseFloat(selectedOption.getAttribute('data-base-price'));
 
@@ -1568,44 +1726,6 @@
       }
     }
 
-    // State of user cabinet
-    const cabinetState = {
-      balance: 0,
-      activeOrderId: 'АС-4929',
-      orders: [
-        {
-          id: 'АС-4929',
-          title: 'Курсова робота з макроекономіки',
-          status: 'В процесі написання',
-          statusIdx: 1, // 0 = TZ, 1 = Work, 2 = Review, 3 = Done
-          deadline: '24.06.2026',
-          writer: 'Дмитро (Доцент)'
-        },
-        {
-          id: 'АС-4930',
-          title: 'Лабораторна робота з алгоритмів на C++',
-          status: 'На вашій перевірці',
-          statusIdx: 2,
-          deadline: '20.06.2026',
-          writer: 'Олексій (Сеньйор Розробник)'
-        }
-      ]
-    };
-
-    // Chat histories mapped by order ID
-    const chatHistories = {
-      'АС-4929': [
-        { sender: 'writer', text: "Вітаю! Отримав вашу тему та методичку. Почав аналізувати джерела та формувати вступну частину. Чи є специфічні побажання щодо плану роботи від керівника?" },
-        { sender: 'user', text: "Доброго дня! Так, викладач просив обов'язково включити статистику за 2024-2025 роки у розділ з практичним аналізом." },
-        { sender: 'writer', text: "Зрозумів. Якраз використовую свіжу аналітику Мінфіну та Нацбанку. Завтра зранку надішлю план на погодження." }
-      ],
-      'АС-4930': [
-        { sender: 'writer', text: "Привіт! Лабораторну роботу повністю закінчено. Код написаний на C++, структурований, додав коментарі до кожної функції. Будь ласка, перевірте роботу у вкладеному ZIP архіві." },
-        { sender: 'user', text: "Дуже дякую, зараз завантажу та подивлюсь." },
-        { sender: 'writer', text: "Якщо виникнуть питання з налаштуванням або компіляцією — одразу пишіть сюди, я онлайн!" }
-      ]
-    };
-
     // Show custom toast notification
     function showToast(title, desc) {
       const toast = document.getElementById('notification-toast');
@@ -1621,7 +1741,232 @@
       }, 4000);
     }
 
-    // Handle Quick Order form submit
+    // Render User Header Auth Status
+    function updateHeaderAuth() {
+      const desktopArea = document.getElementById('auth-header-area');
+      const mobileArea = document.getElementById('auth-mobile-area');
+      const cabinetBadge = document.getElementById('cabinet-badge');
+
+      if (currentSession) {
+        // Logged in
+        const orders = DB.get('pm_orders', []).filter(o => o.clientEmail === currentSession.email);
+        cabinetBadge.innerText = orders.length;
+        if (orders.length > 0) {
+          cabinetBadge.classList.remove('hidden');
+        } else {
+          cabinetBadge.classList.add('hidden');
+        }
+
+        const balanceFormatted = (currentSession.balance || 0).toLocaleString('uk-UA') + ' ₴';
+
+        // Desktop
+        desktopArea.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="text-right">
+              <span class="block text-xs font-bold text-white">${currentSession.name}</span>
+              <span class="block text-[10px] font-bold text-[var(--color-secondary)]">${balanceFormatted}</span>
+            </div>
+            <button onclick="handleLogout()" class="p-2 rounded-xl bg-dark-slate hover:bg-dark-card border border-dark-border hover:text-red-400 transition-colors" title="Вийти з кабінету">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+            </button>
+          </div>
+        `;
+
+        // Mobile
+        mobileArea.innerHTML = `
+          <div class="bg-dark-card rounded-xl p-3 border border-dark-border flex justify-between items-center gap-3">
+            <div>
+              <span class="block text-sm font-bold text-white">${currentSession.name}</span>
+              <span class="block text-xs font-semibold text-[var(--color-secondary)]">Баланс: ${balanceFormatted}</span>
+            </div>
+            <button onclick="handleLogout(); toggleMobileMenu()" class="px-3.5 py-2 rounded-lg bg-red-500/10 border border-red-500/20 text-xs font-bold text-red-400">
+              Вийти
+            </button>
+          </div>
+        `;
+      } else {
+        // Guest
+        cabinetBadge.classList.add('hidden');
+
+        desktopArea.innerHTML = `
+          <button onclick="showAuthModal('login')" class="px-5 py-2.5 rounded-xl bg-dark-slate hover:bg-dark-card border border-dark-border text-xs font-bold text-white transition-all">
+            Вхід / Реєстрація
+          </button>
+        `;
+
+        mobileArea.innerHTML = `
+          <button onclick="showAuthModal('login'); toggleMobileMenu()" class="w-full text-center py-2.5 rounded-xl bg-dark-card border border-dark-border text-sm font-bold text-white">
+            Увійти в кабінет
+          </button>
+        `;
+      }
+    }
+
+    // Modal helpers
+    function showAuthModal(mode) {
+      authMode = mode;
+      const modal = document.getElementById('auth-modal');
+      const title = document.getElementById('auth-modal-title');
+      const desc = document.getElementById('auth-modal-desc');
+      const nameField = document.getElementById('auth-field-name');
+      const submitBtn = document.getElementById('auth-submit-btn');
+      const toggleText = document.getElementById('auth-toggle-text');
+      const toggleBtn = document.getElementById('auth-toggle-btn');
+      const errMsg = document.getElementById('auth-error-msg');
+
+      errMsg.classList.add('hidden');
+      errMsg.innerText = '';
+      
+      modal.classList.remove('hidden');
+
+      if (mode === 'login') {
+        title.innerText = 'Вхід у кабінет';
+        desc.innerText = 'Увійдіть для перегляду та керування своїми замовленнями';
+        nameField.classList.add('hidden');
+        document.getElementById('auth-name').removeAttribute('required');
+        submitBtn.innerText = 'Увійти в кабінет';
+        toggleText.innerText = 'Ще немає кабінету?';
+        toggleBtn.innerText = 'Створити кабінет';
+      } else {
+        title.innerText = 'Реєстрація';
+        desc.innerText = 'Створіть кабінет та отримайте 1 000 ₴ вітального бонусу!';
+        nameField.classList.remove('hidden');
+        document.getElementById('auth-name').setAttribute('required', 'true');
+        submitBtn.innerText = 'Зареєструватися';
+        toggleText.innerText = 'Вже є кабінет?';
+        toggleBtn.innerText = 'Увійти';
+      }
+    }
+
+    function closeAuthModal() {
+      document.getElementById('auth-modal').classList.add('hidden');
+      document.getElementById('auth-modal-form').reset();
+      tempPendingOrder = null;
+      tempPendingCatalogPurchase = null;
+    }
+
+    // Handle quick login inside cabinet screen by toggling modes
+    function toggleAuthMode() {
+      showAuthModal(authMode === 'login' ? 'register' : 'login');
+    }
+
+    // Auth Submission
+    function handleAuthSubmit(event) {
+      event.preventDefault();
+      const name = document.getElementById('auth-name').value.trim();
+      const email = document.getElementById('auth-email').value.trim().toLowerCase();
+      const password = document.getElementById('auth-password').value;
+      const errMsg = document.getElementById('auth-error-msg');
+
+      let users = DB.get('pm_users', []);
+
+      if (authMode === 'login') {
+        const found = users.find(u => u.email === email && u.password === password);
+        if (!found) {
+          errMsg.innerText = 'Невірний email або пароль!';
+          errMsg.classList.remove('hidden');
+          return;
+        }
+
+        // Save session
+        currentSession = found;
+        DB.set('pm_session', found);
+        showToast('Вхід успішний!', `Ласкаво просимо, ${found.name}!`);
+      } else {
+        // Register
+        const exists = users.some(u => u.email === email);
+        if (exists) {
+          errMsg.innerText = 'Цей email вже зареєстрований!';
+          errMsg.classList.remove('hidden');
+          return;
+        }
+
+        const newUser = {
+          email: email,
+          name: name || 'Користувач',
+          password: password,
+          role: 'student',
+          balance: 1000 // 1000 bonus
+        };
+
+        users.push(newUser);
+        DB.set('pm_users', users);
+
+        currentSession = newUser;
+        DB.set('pm_session', newUser);
+
+        showToast('Реєстрація успішна!', `Отримано +1,000 ₴ вітального бонусу!`);
+      }
+
+      // If there was a pending order, submit it now
+      if (tempPendingOrder) {
+        submitNewOrder(tempPendingOrder);
+        tempPendingOrder = null;
+      }
+      // If there was a pending catalog item buy
+      else if (tempPendingCatalogPurchase) {
+        const item = tempPendingCatalogPurchase;
+        tempPendingCatalogPurchase = null;
+        closeAuthModal();
+        buyCatalogItem(item.title, item.price);
+        return;
+      }
+
+      closeAuthModal();
+      updateHeaderAuth();
+      loadCabinetData();
+      navigateTo('cabinet');
+    }
+
+    // Logout function
+    function handleLogout() {
+      currentSession = null;
+      localStorage.removeItem('pm_session');
+      updateHeaderAuth();
+      showToast('Вихід виконано', 'Чекаємо на ваше повернення!');
+      navigateTo('home');
+    }
+
+    // Submit new order logic
+    function submitNewOrder(orderData) {
+      const orders = DB.get('pm_orders', []);
+      const newId = 'АС-' + Math.floor(1000 + Math.random() * 9000);
+      const formattedDate = orderData.deadline.split('-').reverse().join('.');
+      
+      const newOrder = {
+        id: newId,
+        clientEmail: currentSession.email,
+        clientName: currentSession.name,
+        title: `${orderData.type}: ${orderData.topic} (${orderData.subject})`,
+        subject: orderData.subject,
+        pages: 30,
+        price: 0,
+        status: 'Очікує оцінки',
+        statusIdx: 0,
+        writerId: null,
+        deadline: formattedDate || 'Терміново',
+        files: []
+      };
+
+      orders.unshift(newOrder);
+      DB.set('pm_orders', orders);
+
+      // Welcome message in chat
+      const messages = DB.get('pm_messages', []);
+      messages.push({
+        orderId: newId,
+        sender: 'writer',
+        senderName: 'Підтримка',
+        text: `Вітаємо! Ваше замовлення №${newId} успішно зареєстровано. Наразі ми підбираємо найкращого експерта за напрямком "${orderData.subject}". Ви можете додати деталі або завантажити додаткові файли прямо в цей чат.`,
+        timestamp: new Date().toISOString()
+      });
+      DB.set('pm_messages', messages);
+
+      cabinetState.activeOrderId = newId;
+      showToast('Заявка надіслана!', `Замовлення ${newId} зареєстровано. Чат відкрито.`);
+    }
+
+    // Handle Quick Order Form
     function handleOrderSubmit(event) {
       event.preventDefault();
 
@@ -1631,65 +1976,82 @@
       const deadlineVal = document.getElementById('form-deadline').value;
       const contact = document.getElementById('form-contact').value;
 
-      const newId = 'АС-' + Math.floor(1000 + Math.random() * 9000);
-      const formattedDate = deadlineVal.split('-').reverse().join('.');
-      
-      const newOrder = {
-        id: newId,
-        title: `${type}: ${topic} (${subject})`,
-        status: 'Очікує оцінки',
-        statusIdx: 0,
-        deadline: formattedDate || 'Терміново',
-        writer: 'Призначається...'
-      };
+      const orderData = { type, subject, topic, deadline: deadlineVal, contact };
 
-      cabinetState.orders.unshift(newOrder);
-      
-      // Initialize chat history for the new order and make it active
-      chatHistories[newId] = [
-        { sender: 'writer', text: `Вітаємо! Ваше замовлення №${newId} успішно зареєстровано. Наразі ми підбираємо експерта за напрямком "${subject}". Ви можете додати деталі або завантажити додаткові файли прямо в цей чат.` }
-      ];
-      cabinetState.activeOrderId = newId;
+      if (!currentSession) {
+        tempPendingOrder = orderData;
+        showAuthModal('register');
+        document.getElementById('auth-modal-desc').innerText = 'Створіть особистий кабінет для збереження замовлення!';
+        return;
+      }
 
-      const badge = document.getElementById('cabinet-badge');
-      const activeCount = cabinetState.orders.length;
-      badge.innerText = activeCount;
-      badge.classList.remove('hidden');
-      
-      document.getElementById('active-orders-count').innerText = activeCount;
-
-      renderCabinetOrders();
-      renderActiveChat();
-
-      showToast('Заявка надіслана!', `Замовлення ${newId} зареєстровано. Чат з автором відкрито.`);
-
+      submitNewOrder(orderData);
       document.getElementById('quick-order-form').reset();
       document.getElementById('file-label').innerText = 'Перетягніть файли сюди або натисніть для вибору на пристрої';
       document.getElementById('file-label').classList.remove('text-[var(--color-secondary)]');
       document.getElementById('file-label').classList.add('text-gray-400');
 
-      setTimeout(() => {
-        navigateTo('cabinet');
-      }, 1500);
+      loadCabinetData();
+      navigateTo('cabinet');
+    }
+
+    // Load cabinet data dynamically
+    function loadCabinetData() {
+      if (!currentSession) return;
+      
+      // Update session info from DB (in case of balance changes)
+      const users = DB.get('pm_users', []);
+      const matched = users.find(u => u.email === currentSession.email);
+      if (matched) {
+        currentSession = matched;
+        DB.set('pm_session', matched);
+      }
+
+      cabinetState.balance = currentSession.balance || 0;
+      document.getElementById('cabinet-balance').innerText = cabinetState.balance.toLocaleString('uk-UA') + ' ₴';
+
+      const allOrders = DB.get('pm_orders', []);
+      cabinetState.orders = allOrders.filter(o => o.clientEmail === currentSession.email);
+
+      document.getElementById('active-orders-count').innerText = cabinetState.orders.length;
+
+      if (cabinetState.orders.length > 0 && !cabinetState.activeOrderId) {
+        cabinetState.activeOrderId = cabinetState.orders[0].id;
+      }
+
+      renderCabinetOrders();
+      renderActiveChat();
     }
 
     // Render orders in cabinet
     function renderCabinetOrders() {
       const container = document.getElementById('cabinet-orders-list');
+      if (!container) return;
       container.innerHTML = '';
+
+      if (cabinetState.orders.length === 0) {
+        container.innerHTML = `
+          <div class="bg-dark-slate border border-dark-border/40 rounded-2xl p-8 text-center text-gray-500 text-xs">
+            У вас ще немає замовлень. Створіть швидке замовлення або оберіть роботу з каталогу!
+          </div>
+        `;
+        return;
+      }
 
       cabinetState.orders.forEach(order => {
         const orderCard = document.createElement('div');
+        const isActive = order.id === cabinetState.activeOrderId;
+        const borderStyle = isActive ? 'border-[var(--color-primary)]/50 bg-dark-card/45' : 'border-dark-border';
         
-        orderCard.className = 'bg-dark-slate border border-dark-border rounded-2xl p-6 space-y-4 cursor-pointer transition-all duration-300 hover:border-gray-500/20';
+        orderCard.className = `bg-dark-slate border ${borderStyle} rounded-2xl p-6 space-y-4 cursor-pointer transition-all duration-300 hover:border-gray-500/25`;
         orderCard.setAttribute('onclick', `selectActiveOrder('${order.id}')`);
         
         let statusBadgeClass = 'bg-opacity-15 bg-[var(--color-secondary)] text-[var(--color-secondary)] border border-[var(--color-secondary)]/25';
-        if (order.status.includes('перевірці')) {
+        if (order.status.includes('перевірці') || order.status === 'In Review') {
           statusBadgeClass = 'bg-opacity-15 bg-[var(--color-primary)] text-[var(--color-primary)] border border-[var(--color-primary)]/25';
         } else if (order.status.includes('Очікує')) {
           statusBadgeClass = 'bg-gray-500/15 text-gray-400 border border-gray-500/25';
-        } else if (order.status.includes('Готово')) {
+        } else if (order.status.includes('Готово') || order.status === 'Completed') {
           statusBadgeClass = 'bg-green-500/15 text-green-400 border border-green-500/25';
         }
 
@@ -1715,18 +2077,23 @@
         `;
 
         let actionsHtml = '';
-        if (order.status.includes('перевірці')) {
+        if (order.statusIdx === 2) {
           actionsHtml = `
             <div class="pt-2 flex gap-3" onclick="event.stopPropagation()">
-              <a href="#" onclick="alert('Скачування файлу ТЗ_v1.zip. Демо версія.'); return false;" class="flex-1 text-center py-2.5 bg-dark-obsidian border border-dark-border rounded-xl text-xs font-bold text-white hover:bg-dark-border transition-colors">
-                Завантажити демо
+              <a href="#" onclick="alert('Завантаження демонстраційної версії роботи...'); return false;" class="flex-1 text-center py-2.5 bg-dark-obsidian border border-dark-border rounded-xl text-xs font-bold text-white hover:bg-dark-border transition-colors">
+                Скачати демо
               </a>
               <button onclick="approveOrder('${order.id}')" class="flex-1 py-2.5 bg-[var(--color-secondary)] hover:bg-opacity-90 rounded-xl text-xs font-bold text-white transition-colors shadow-md">
-                Прийняти та оплатити 50%
+                Прийняти та оплатити
               </button>
             </div>
           `;
         }
+
+        // Get writer name
+        const writers = DB.get('pm_writers', []);
+        const matchedWriter = writers.find(w => w.id === order.writerId);
+        const writerName = matchedWriter ? matchedWriter.name : (order.writerId ? 'Призначено' : 'Призначається...');
 
         orderCard.innerHTML = `
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
@@ -1734,14 +2101,16 @@
               <span class="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Замовлення №${order.id}</span>
               <h4 class="text-base font-bold text-white">${order.title}</h4>
             </div>
-            <span class="px-2.5 py-1 text-[10px] font-bold rounded ${statusBadgeClass}">${order.status}</span>
+            <span class="px-2.5 py-1 text-[10px] font-bold rounded ${statusBadgeClass}">
+              ${order.status === 'In Review' ? 'На перевірці' : (order.status === 'Completed' ? 'Завершено' : order.status)}
+            </span>
           </div>
           
           ${stepsHtml}
 
           <div class="flex justify-between items-center pt-2 text-xs text-gray-400">
             <span>Дедлайн: <strong class="text-white">${order.deadline}</strong></span>
-            <span>Виконавець: <strong class="text-[var(--color-secondary)]">${order.writer}</strong></span>
+            <span>Виконавець: <strong class="text-[var(--color-secondary)]">${writerName}</strong></span>
           </div>
 
           ${actionsHtml}
@@ -1751,27 +2120,37 @@
       });
     }
 
-    // Render the active chat history and header
+    // Switch between order chats
+    function selectActiveOrder(orderId) {
+      cabinetState.activeOrderId = orderId;
+      renderCabinetOrders();
+      renderActiveChat();
+    }
+
+    // Render active chat
     function renderActiveChat() {
       const activeId = cabinetState.activeOrderId;
-      const order = cabinetState.orders.find(o => o.id === activeId);
+      if (!activeId) return;
+      const order = DB.get('pm_orders', []).find(o => o.id === activeId);
       if (!order) return;
 
-      const writerInitial = order.writer.charAt(0);
+      const writers = DB.get('pm_writers', []);
+      const writer = writers.find(w => w.id === order.writerId) || { name: 'Підтримка', title: 'Менеджер' };
+      const writerInitial = writer.name.charAt(0);
       
       // Update Chat Header
       const headerContainer = document.getElementById('chat-header-info');
       if (headerContainer) {
         headerContainer.innerHTML = `
           <div class="relative">
-            <div class="w-10 h-10 rounded-full bg-opacity-15 bg-[var(--color-secondary)] flex items-center justify-center text-[var(--color-secondary)] font-bold border border-[var(--color-secondary)]/25">
+            <div class="w-10 h-10 rounded-full bg-opacity-15 bg-[var(--color-secondary)] flex items-center justify-center text-[var(--color-secondary)] font-bold border border-[var(--color-secondary)]/25 font-display">
               ${writerInitial}
             </div>
             <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-green-500 border-2 border-dark-slate"></span>
           </div>
           <div>
-            <div class="text-sm font-bold text-white">${order.writer}</div>
-            <div class="text-[9px] text-green-400 uppercase font-bold tracking-wider">Виконавець по ${order.id}</div>
+            <div class="text-sm font-bold text-white">${writer.name}</div>
+            <div class="text-[9px] text-green-400 uppercase font-bold tracking-wider">${writer.title} по ${order.id}</div>
           </div>
         `;
       }
@@ -1780,11 +2159,12 @@
       const container = document.getElementById('chat-messages-container');
       if (container) {
         container.innerHTML = '';
-        const history = chatHistories[activeId] || [];
+        const allMessages = DB.get('pm_messages', []);
+        const history = allMessages.filter(m => m.orderId === activeId);
         
         history.forEach(msg => {
           const row = document.createElement('div');
-          if (msg.sender === 'user') {
+          if (msg.sender === 'student') {
             row.className = 'flex gap-2 items-start max-w-[85%] ml-auto justify-end';
             row.innerHTML = `
               <div class="bg-opacity-80 bg-[var(--color-primary)] rounded-2xl rounded-tr-none p-3.5 text-xs text-white leading-relaxed">
@@ -1794,7 +2174,7 @@
           } else {
             row.className = 'flex gap-2 items-start max-w-[85%]';
             row.innerHTML = `
-              <div class="w-8 h-8 rounded-full bg-opacity-15 bg-[var(--color-secondary)] flex items-center justify-center text-[var(--color-secondary)] font-bold text-xs flex-shrink-0 border border-[var(--color-secondary)]/20">
+              <div class="w-8 h-8 rounded-full bg-opacity-15 bg-[var(--color-secondary)] flex items-center justify-center text-[var(--color-secondary)] font-bold text-xs flex-shrink-0 border border-[var(--color-secondary)]/20 font-display">
                 ${writerInitial}
               </div>
               <div class="bg-dark-card rounded-2xl rounded-tl-none p-3.5 text-xs text-white leading-relaxed border border-dark-border/40">
@@ -1810,13 +2190,6 @@
       }
     }
 
-    // Switch between order chats
-    function selectActiveOrder(orderId) {
-      cabinetState.activeOrderId = orderId;
-      renderCabinetOrders();
-      renderActiveChat();
-    }
-
     // Handle sending message in Chat
     function handleSendMessage(event) {
       event.preventDefault();
@@ -1825,125 +2198,192 @@
       if (!text) return;
 
       const activeId = cabinetState.activeOrderId;
-      const order = cabinetState.orders.find(o => o.id === activeId);
-      const writerInitial = order ? order.writer.charAt(0) : 'Д';
-
-      // Save user message to history
-      if (!chatHistories[activeId]) {
-        chatHistories[activeId] = [];
-      }
-      chatHistories[activeId].push({ sender: 'user', text: text });
-
-      // Render updated list
-      renderActiveChat();
+      const messages = DB.get('pm_messages', []);
+      
+      const newMsg = {
+        orderId: activeId,
+        sender: 'student',
+        senderName: currentSession.name,
+        text: text,
+        timestamp: new Date().toISOString()
+      };
+      
+      messages.push(newMsg);
+      DB.set('pm_messages', messages);
+      
       input.value = '';
+      renderActiveChat();
 
-      // Simulated auto reply
+      // Trigger automatic typing response simulation from writer
+      const order = DB.get('pm_orders', []).find(o => o.id === activeId);
+      const writerInitial = order && order.writerId ? 'Д' : 'П';
+
       setTimeout(() => {
         const container = document.getElementById('chat-messages-container');
         if (!container) return;
 
         const writerMsg = document.createElement('div');
-        writerMsg.className = 'flex gap-2 items-start max-w-[85%]';
+        writerMsg.className = 'flex gap-2 items-start max-w-[85%] typing-loader';
         writerMsg.innerHTML = `
-          <div class="w-8 h-8 rounded-full bg-opacity-15 bg-[var(--color-secondary)] flex items-center justify-center text-[var(--color-secondary)] font-bold text-xs flex-shrink-0 border border-[var(--color-secondary)]/20">
+          <div class="w-8 h-8 rounded-full bg-opacity-15 bg-[var(--color-secondary)] flex items-center justify-center text-[var(--color-secondary)] font-bold text-xs flex-shrink-0 border border-[var(--color-secondary)]/20 font-display">
             ${writerInitial}
           </div>
           <div class="bg-dark-card rounded-2xl rounded-tl-none p-3.5 text-xs text-white border border-dark-border/40 animate-pulse">
-            Виконавець друкує відповідь...
+            Співрозмовник пише відповідь...
           </div>
         `;
         container.appendChild(writerMsg);
         container.scrollTop = container.scrollHeight;
 
         setTimeout(() => {
-          const actualText = writerReplies[replyIdx % writerReplies.length];
-          replyIdx++;
+          // Remove loader
+          writerMsg.remove();
           
-          // Save reply to history
-          chatHistories[activeId].push({ sender: 'writer', text: actualText });
+          const writerReplies = [
+            "Звичайно, я врахую ці зауваження. Чи є ще якісь коментарі від викладача?",
+            "Дякую. Уточню цей момент у роботі. Надішлю оновлений файл сьогодні пізніше.",
+            "Вже додаю найновішу статистику. Проект пройде перевірку на плагіат з результатом ~90% унікальності.",
+            "Усе виконано строго за вимогами. Бажаю успішного та легкого захисту!"
+          ];
           
-          // Re-render chat history
+          const replyText = writerReplies[Math.floor(Math.random() * writerReplies.length)];
+          const chatMsgs = DB.get('pm_messages', []);
+          
+          chatMsgs.push({
+            orderId: activeId,
+            sender: 'writer',
+            senderName: order && order.writerId ? 'Виконавець' : 'Підтримка',
+            text: replyText,
+            timestamp: new Date().toISOString()
+          });
+          DB.set('pm_messages', chatMsgs);
           renderActiveChat();
         }, 1500);
 
-      }, 1000);
+      }, 1200);
     }
 
     // Top up balance simulation
     function topUpBalance() {
-      const amountStr = prompt('Введіть суму для поповнення балансу (₴):', '500');
+      const amountStr = prompt('Введіть суму для поповнення балансу (₴):', '1000');
       if (amountStr === null) return;
       const amount = parseFloat(amountStr);
       if (!isNaN(amount) && amount > 0) {
-        cabinetState.balance += amount;
-        document.getElementById('cabinet-balance').innerText = cabinetState.balance.toLocaleString('uk-UA') + ' ₴';
-        showToast('Рахунок поповнено!', `Успішно зараховано +${amount} ₴.`);
+        const users = DB.get('pm_users', []);
+        const matchedIdx = users.findIndex(u => u.email === currentSession.email);
+        if (matchedIdx !== -1) {
+          users[matchedIdx].balance = (users[matchedIdx].balance || 0) + amount;
+          DB.set('pm_users', users);
+          
+          currentSession.balance = users[matchedIdx].balance;
+          DB.set('pm_session', currentSession);
+          
+          updateHeaderAuth();
+          loadCabinetData();
+          showToast('Рахунок поповнено!', `Успішно зараховано +${amount} ₴.`);
+        }
       }
     }
 
-    // Approve order
+    // Approve order and deduct balance
     function approveOrder(orderId) {
-      const order = cabinetState.orders.find(o => o.id === orderId);
-      if (order) {
-        if (cabinetState.balance < 500) {
-          alert(`Недостатньо коштів на балансі! Необхідна сума доплати: 500 ₴. Будь ласка, поповніть баланс.`);
+      const orders = DB.get('pm_orders', []);
+      const matchedIdx = orders.findIndex(o => o.id === orderId);
+      if (matchedIdx !== -1) {
+        const order = orders[matchedIdx];
+        
+        // Calculate remaining 50% price
+        const costToPay = Math.round(order.price * 0.5);
+
+        if (cabinetState.balance < costToPay) {
+          alert(`Недостатньо коштів на балансі! Необхідна сума доплати: ${costToPay} ₴. Будь ласка, поповніть баланс.`);
           topUpBalance();
           return;
         }
 
-        cabinetState.balance -= 500;
-        document.getElementById('cabinet-balance').innerText = cabinetState.balance.toLocaleString('uk-UA') + ' ₴';
-        
-        order.status = 'Готово до захисту';
+        // Subtract balance
+        const users = DB.get('pm_users', []);
+        const userIdx = users.findIndex(u => u.email === currentSession.email);
+        if (userIdx !== -1) {
+          users[userIdx].balance -= costToPay;
+          DB.set('pm_users', users);
+          
+          currentSession.balance = users[userIdx].balance;
+          DB.set('pm_session', currentSession);
+        }
+
+        order.status = 'Готово';
         order.statusIdx = 3;
-        
-        renderCabinetOrders();
+        DB.set('pm_orders', orders);
+
+        loadCabinetData();
         showToast('Проект прийнято!', `Замовлення завершено. Фінальні файли доступні для завантаження.`);
       }
     }
 
     // Buy catalog ready-made item
     function buyCatalogItem(title, price) {
+      if (!currentSession) {
+        tempPendingCatalogPurchase = { title, price };
+        showAuthModal('login');
+        document.getElementById('auth-modal-desc').innerText = 'Увійдіть або зареєструйтесь, щоб придбати готову роботу!';
+        return;
+      }
+
       if (cabinetState.balance < price) {
         alert(`Недостатньо коштів на балансі! Вартість готової роботи: ${price} ₴. Поповніть баланс.`);
         topUpBalance();
         return;
       }
 
-      cabinetState.balance -= price;
-      document.getElementById('cabinet-balance').innerText = cabinetState.balance.toLocaleString('uk-UA') + ' ₴';
+      // Deduct balance
+      const users = DB.get('pm_users', []);
+      const userIdx = users.findIndex(u => u.email === currentSession.email);
+      if (userIdx !== -1) {
+        users[userIdx].balance -= price;
+        DB.set('pm_users', users);
+        
+        currentSession.balance = users[userIdx].balance;
+        DB.set('pm_session', currentSession);
+      }
 
+      const orders = DB.get('pm_orders', []);
       const newId = 'АС-' + Math.floor(1000 + Math.random() * 9000);
       const newOrder = {
         id: newId,
+        clientEmail: currentSession.email,
+        clientName: currentSession.name,
         title: `Каталог: ${title}`,
-        status: 'Готово до захисту',
+        subject: 'Каталог',
+        pages: 35,
+        price: price,
+        status: 'Готово',
         statusIdx: 3,
+        writerId: null,
         deadline: 'Отримано',
-        writer: 'Автоматичний продаж'
+        files: ['Готова_робота_PaperMentor.zip']
       };
 
-      cabinetState.orders.unshift(newOrder);
+      orders.unshift(newOrder);
+      DB.set('pm_orders', orders);
       
-      // Initialize chat history for the catalog item purchase and set it active
-      chatHistories[newId] = [
-        { sender: 'writer', text: `Вітаємо з придбанням готової роботи! Роботу "${title}" успішно зараховано. Фінальний файл згенеровано і готовий до захисту. Напишіть у цей чат, якщо вам знадобиться допомога з підготовкою презентації чи доповіді.` }
-      ];
+      const messages = DB.get('pm_messages', []);
+      messages.push({
+        orderId: newId,
+        sender: 'writer',
+        senderName: 'Підтримка',
+        text: `Вітаємо з придбанням готової роботи! Роботу "${title}" успішно придбано. Фінальний файл згенеровано і готовий до захисту. Напишіть у цей чат, якщо вам знадобиться допомога з підготовкою презентації чи доповіді.`,
+        timestamp: new Date().toISOString()
+      });
+      DB.set('pm_messages', messages);
+
       cabinetState.activeOrderId = newId;
-
-      document.getElementById('active-orders-count').innerText = cabinetState.orders.length;
-      document.getElementById('cabinet-badge').innerText = cabinetState.orders.length;
-      document.getElementById('cabinet-badge').classList.remove('hidden');
-
-      renderCabinetOrders();
-      renderActiveChat();
+      
+      updateHeaderAuth();
+      loadCabinetData();
       
       showToast('Покупку здійснено!', `Робота завантажена та додана у ваш кабінет.`);
-      
-      setTimeout(() => {
-        navigateTo('cabinet');
-      }, 1000);
+      navigateTo('cabinet');
     }
 
     // Filter catalog items logic
@@ -1976,62 +2416,6 @@
           item.classList.add('hidden');
         }
       });
-    }
-
-    // Chat replies database
-    const writerReplies = [
-      "Звичайно, я врахую ці зауваження. Чи є ще якісь коментарі від викладача?",
-      "Дякую. Уточню цей момент у третьому розділі. Надішлю файл сьогодні ввечері.",
-      "Вже додаю найновішу статистику. Проект пройде перевірку на плагіат з результатом ~90% унікальності.",
-      "Усе виконано строго за вимогами. Бажаю успішного та легкого захисту!"
-    ];
-    let replyIdx = 0;
-
-    // Handle sending message in Chat
-    function handleSendMessage(event) {
-      event.preventDefault();
-      const input = document.getElementById('chat-input');
-      const text = input.value.trim();
-      if (!text) return;
-
-      const container = document.getElementById('chat-messages-container');
-      
-      const userMsg = document.createElement('div');
-      userMsg.className = 'flex gap-2 items-start max-w-[85%] ml-auto justify-end';
-      userMsg.innerHTML = `
-        <div class="bg-opacity-80 bg-[var(--color-primary)] rounded-2xl rounded-tr-none p-3.5 text-xs text-white">
-          ${text}
-        </div>
-      `;
-      container.appendChild(userMsg);
-      input.value = '';
-
-      container.scrollTop = container.scrollHeight;
-
-      // Simulated auto reply
-      setTimeout(() => {
-        const writerMsg = document.createElement('div');
-        writerMsg.className = 'flex gap-2 items-start max-w-[85%]';
-        writerMsg.innerHTML = `
-          <div class="w-8 h-8 rounded-full bg-opacity-15 bg-[var(--color-secondary)] flex items-center justify-center text-[var(--color-secondary)] font-bold text-xs flex-shrink-0 border border-[var(--color-secondary)]/20">
-            Д
-          </div>
-          <div class="bg-dark-card rounded-2xl rounded-tl-none p-3.5 text-xs text-white border border-dark-border/40 animate-pulse">
-            Виконавець друкує відповідь...
-          </div>
-        `;
-        container.appendChild(writerMsg);
-        container.scrollTop = container.scrollHeight;
-
-        setTimeout(() => {
-          const actualText = writerReplies[replyIdx % writerReplies.length];
-          replyIdx++;
-          writerMsg.querySelector('div:last-child').classList.remove('animate-pulse');
-          writerMsg.querySelector('div:last-child').innerText = actualText;
-          container.scrollTop = container.scrollHeight;
-        }, 1500);
-
-      }, 1000);
     }
 
     // Platform Live stream simulator
@@ -2079,12 +2463,21 @@
       }, 5000);
     }
 
+    // Cross-tab synchronization event listener
+    window.addEventListener('storage', () => {
+      currentSession = DB.get('pm_session', null);
+      updateHeaderAuth();
+      loadCabinetData();
+    });
+
     // Initialize page
     window.addEventListener('DOMContentLoaded', () => {
       calculatePrice();
       simulateLiveStream();
-      renderCabinetOrders();
-      renderActiveChat();
+      updateHeaderAuth();
+      if (currentSession) {
+        loadCabinetData();
+      }
       
       // Set date input min to tomorrow
       const tomorrow = new Date();

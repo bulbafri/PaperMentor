@@ -271,7 +271,6 @@
 
         <!-- Controls (Theme switcher & Logout) -->
         <div class="flex items-center gap-4 w-full md:w-auto justify-end">
-          
           <!-- Theme Palette Selector -->
           <div class="relative group">
             <button class="w-10 h-10 rounded-xl bg-dark-slate hover:bg-dark-card border border-dark-border flex items-center justify-center text-gray-400 hover:text-white transition-all shadow-inner" title="Змінити палітру кольорів">
@@ -318,201 +317,451 @@
         </div>
       </div>
 
-      <!-- STATISTICS ROW -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-        <div class="bg-dark-slate border border-dark-border/60 rounded-2xl p-5 space-y-1 relative overflow-hidden">
-          <span class="block text-[10px] text-gray-500 font-extrabold uppercase tracking-wide">Мій заробіток (₴)</span>
-          <span id="stat-earnings" class="block text-2xl md:text-3xl font-extrabold text-white font-display">18 450 ₴</span>
-          <span class="text-[9px] text-green-400 block font-semibold">+1 500 ₴ сьогодні</span>
+      <!-- ROLE CHANGER HEADER (ONLY ADMIN SIDEBAR INJECTOR) -->
+      <div id="admin-tabs-nav" class="hidden border-b border-dark-border/40 pb-3 flex flex-wrap gap-2.5 overflow-x-auto custom-scrollbar">
+        <button onclick="switchAdminTab('overview')" id="tab-sec-overview" class="admin-tab-btn px-5 py-2.5 text-xs font-bold rounded-xl bg-[var(--color-primary)] text-white shadow-lg transition-all">Аналітика бізнесу</button>
+        <button onclick="switchAdminTab('orders')" id="tab-sec-orders" class="admin-tab-btn px-5 py-2.5 text-xs font-bold rounded-xl bg-dark-slate border border-dark-border text-gray-400 hover:text-white transition-all">Керування замовленнями</button>
+        <button onclick="switchAdminTab('employees')" id="tab-sec-employees" class="admin-tab-btn px-5 py-2.5 text-xs font-bold rounded-xl bg-dark-slate border border-dark-border text-gray-400 hover:text-white transition-all">База виконавців (Автори)</button>
+        <button onclick="switchAdminTab('chats')" id="tab-sec-chats" class="admin-tab-btn px-5 py-2.5 text-xs font-bold rounded-xl bg-dark-slate border border-dark-border text-gray-400 hover:text-white transition-all">Глобальна підтримка (Чат)</button>
+        <button onclick="switchAdminTab('settings')" id="tab-sec-settings" class="admin-tab-btn px-5 py-2.5 text-xs font-bold rounded-xl bg-dark-slate border border-dark-border text-gray-400 hover:text-white transition-all">Налаштування системи</button>
+      </div>
+
+      <!-- WRITER SECTION: STATS & SPLIT VIEW -->
+      <div id="writer-sec-dashboard" class="space-y-8">
+        <!-- Statistics counters -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div class="bg-dark-slate border border-dark-border/60 rounded-2xl p-5 space-y-1 relative overflow-hidden">
+            <span class="block text-[10px] text-gray-500 font-extrabold uppercase tracking-wide">Мій заробіток (₴)</span>
+            <span id="stat-earnings" class="block text-2xl md:text-3xl font-extrabold text-white font-display">18 450 ₴</span>
+            <span class="text-[9px] text-green-400 block font-semibold">+1 500 ₴ сьогодні</span>
+          </div>
+          <div class="bg-dark-slate border border-dark-border/60 rounded-2xl p-5 space-y-1 relative overflow-hidden">
+            <span class="block text-[10px] text-gray-500 font-extrabold uppercase tracking-wide">Замовлень в роботі</span>
+            <span id="stat-active" class="block text-2xl md:text-3xl font-extrabold text-white font-display">2</span>
+            <span class="text-[9px] text-gray-400 block font-semibold">Надіслано 1 на перевірку</span>
+          </div>
+          <div class="bg-dark-slate border border-dark-border/60 rounded-2xl p-5 space-y-1 relative overflow-hidden">
+            <span class="block text-[10px] text-gray-500 font-extrabold uppercase tracking-wide">Виконано робіт</span>
+            <span id="stat-completed" class="block text-2xl md:text-3xl font-extrabold text-[var(--color-primary)] font-display">24</span>
+            <span class="text-[9px] text-gray-400 block font-semibold">Конверсія ТЗ: 100%</span>
+          </div>
+          <div class="bg-dark-slate border border-dark-border/60 rounded-2xl p-5 space-y-1 relative overflow-hidden">
+            <span class="block text-[10px] text-gray-500 font-extrabold uppercase tracking-wide">Мій рейтинг авторитету</span>
+            <span class="block text-2xl md:text-3xl font-extrabold text-white font-display flex items-center gap-1.5">
+              4.95 
+              <svg class="w-5 h-5 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+            </span>
+            <span class="text-[9px] text-gray-400 block font-semibold">50 позитивних відгуків</span>
+          </div>
         </div>
-        <div class="bg-dark-slate border border-dark-border/60 rounded-2xl p-5 space-y-1 relative overflow-hidden">
-          <span class="block text-[10px] text-gray-500 font-extrabold uppercase tracking-wide">Замовлень в роботі</span>
-          <span id="stat-active" class="block text-2xl md:text-3xl font-extrabold text-white font-display">2</span>
-          <span class="text-[9px] text-gray-400 block font-semibold">Надіслано 1 на перевірку</span>
-        </div>
-        <div class="bg-dark-slate border border-dark-border/60 rounded-2xl p-5 space-y-1 relative overflow-hidden">
-          <span class="block text-[10px] text-gray-500 font-extrabold uppercase tracking-wide">Виконано робіт</span>
-          <span id="stat-completed" class="block text-2xl md:text-3xl font-extrabold text-[var(--color-primary)] font-display">24</span>
-          <span class="text-[9px] text-gray-400 block font-semibold">Конверсія ТЗ: 100%</span>
-        </div>
-        <div class="bg-dark-slate border border-dark-border/60 rounded-2xl p-5 space-y-1 relative overflow-hidden">
-          <span class="block text-[10px] text-gray-500 font-extrabold uppercase tracking-wide">Мій рейтинг авторитету</span>
-          <span class="block text-2xl md:text-3xl font-extrabold text-white font-display flex items-center gap-1.5 font-display">
-            4.95 
-            <svg class="w-5 h-5 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-          </span>
-          <span class="text-[9px] text-gray-400 block font-semibold">50 позитивних відгуків</span>
+
+        <!-- Writer split view -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <!-- Left Side: Order Console (7 cols) -->
+          <div class="lg:col-span-7 space-y-6">
+            <div class="flex justify-between items-center border-b border-dark-border/40 pb-3">
+              <div class="flex gap-2 overflow-x-auto custom-scrollbar">
+                <button onclick="filterOrders('all')" id="tab-all" class="tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-[var(--color-primary)] text-white transition-all">Всі роботи</button>
+                <button onclick="filterOrders('in_work')" id="tab-in_work" class="tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-dark-slate border border-dark-border text-gray-400 hover:text-white transition-all">В роботі</button>
+                <button onclick="filterOrders('review')" id="tab-review" class="tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-dark-slate border border-dark-border text-gray-400 hover:text-white transition-all">На перевірці / Нові</button>
+                <button onclick="filterOrders('done')" id="tab-done" class="tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-dark-slate border border-dark-border text-gray-400 hover:text-white transition-all">Завершені</button>
+              </div>
+            </div>
+            <div class="space-y-4" id="orders-list-container"></div>
+          </div>
+
+          <!-- Right Side: Chat Hub (5 cols) -->
+          <div class="lg:col-span-5">
+            <div class="bg-dark-slate border border-dark-border rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[580px]">
+              <div class="grid grid-cols-12 h-full">
+                <div class="col-span-4 bg-dark-card border-r border-dark-border flex flex-col">
+                  <div class="p-3 border-b border-dark-border text-[9px] font-extrabold uppercase tracking-widest text-gray-500">Активні чати</div>
+                  <div class="flex-grow overflow-y-auto custom-scrollbar divide-y divide-dark-border/30" id="chats-list-container"></div>
+                </div>
+                <div class="col-span-8 flex flex-col h-full bg-dark-slate/40">
+                  <div class="bg-dark-card/90 border-b border-dark-border p-3.5 flex items-center justify-between" id="active-chat-header"></div>
+                  <div class="flex-grow p-4 space-y-4 overflow-y-auto custom-scrollbar" id="messages-container"></div>
+                  <form onsubmit="handleSendAdminMessage(event)" class="bg-dark-card p-3 border-t border-dark-border flex gap-2">
+                    <input type="text" id="admin-chat-input" placeholder="Введіть повідомлення клієнту..." class="flex-grow bg-dark-slate border border-dark-border rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-[var(--color-primary)] placeholder-gray-600">
+                    <button type="submit" class="w-10.5 h-10.5 rounded-xl bg-[var(--color-primary)] text-white flex items-center justify-center transition-colors">
+                      <svg class="w-5 h-5 transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- MAIN ROW: ORDERS & MESSAGES -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        <!-- Left Side: Order Console (7 cols) -->
-        <div class="lg:col-span-7 space-y-6">
-          
-          <!-- Filter Tabs -->
-          <div class="flex justify-between items-center border-b border-dark-border/40 pb-3">
-            <div class="flex gap-2 overflow-x-auto custom-scrollbar">
-              <button onclick="filterOrders('all')" id="tab-all" class="tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-[var(--color-primary)] text-white transition-all">Всі роботи</button>
-              <button onclick="filterOrders('in_work')" id="tab-in_work" class="tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-dark-slate border border-dark-border text-gray-400 hover:text-white transition-all">В роботі</button>
-              <button onclick="filterOrders('review')" id="tab-review" class="tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-dark-slate border border-dark-border text-gray-400 hover:text-white transition-all">На оцінці / Нові</button>
-              <button onclick="filterOrders('done')" id="tab-done" class="tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-dark-slate border border-dark-border text-gray-400 hover:text-white transition-all">Завершені</button>
-            </div>
+      <!-- ADMIN VIEW 1: OVERVIEW -->
+      <div id="admin-sec-overview" class="hidden space-y-8">
+        <!-- Financial & Company KPIs -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div class="bg-dark-slate border border-dark-border/60 rounded-2xl p-5 space-y-1 relative overflow-hidden">
+            <div class="absolute -right-3 -top-3 w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 font-extrabold text-lg">$</div>
+            <span class="block text-[10px] text-gray-500 font-extrabold uppercase tracking-wide">Валовий дохід компанії</span>
+            <span id="admin-stat-revenue" class="block text-2xl md:text-3xl font-extrabold text-white font-display">0 ₴</span>
+            <span class="text-[9px] text-green-400 block font-semibold">+12% зростання за місяць</span>
           </div>
-
-          <!-- Orders cards grid container -->
-          <div class="space-y-4" id="orders-list-container">
-            <!-- Джерело замовлень генерується динамічно -->
+          <div class="bg-dark-slate border border-dark-border/60 rounded-2xl p-5 space-y-1 relative overflow-hidden">
+            <span class="block text-[10px] text-gray-500 font-extrabold uppercase tracking-wide">Всього замовлень</span>
+            <span id="admin-stat-orders" class="block text-2xl md:text-3xl font-extrabold text-white font-display">0</span>
+            <span class="text-[9px] text-gray-400 block font-semibold">Включаючи нерозподілені</span>
+          </div>
+          <div class="bg-dark-slate border border-dark-border/60 rounded-2xl p-5 space-y-1 relative overflow-hidden">
+            <span class="block text-[10px] text-gray-500 font-extrabold uppercase tracking-wide">Активні виконавці</span>
+            <span id="admin-stat-writers" class="block text-2xl md:text-3xl font-extrabold text-[var(--color-primary)] font-display">0</span>
+            <span class="text-[9px] text-gray-400 block font-semibold">Зареєстровано в базі</span>
+          </div>
+          <div class="bg-dark-slate border border-dark-border/60 rounded-2xl p-5 space-y-1 relative overflow-hidden">
+            <span class="block text-[10px] text-gray-500 font-extrabold uppercase tracking-wide">Середній чек</span>
+            <span id="admin-stat-avg" class="block text-2xl md:text-3xl font-extrabold text-white font-display">1 850 ₴</span>
+            <span class="text-[9px] text-green-400 block font-semibold">Позитивний тренд</span>
           </div>
         </div>
 
-        <!-- Right Side: Chat Hub (5 cols) -->
-        <div class="lg:col-span-5">
-          <div class="bg-dark-slate border border-dark-border rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[580px]">
+        <!-- Revenue SVG Chart & System Feed -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <!-- Premium Chart Area (7 cols) -->
+          <div class="lg:col-span-7 bg-dark-slate border border-dark-border rounded-3xl p-6.5 space-y-6">
+            <div class="flex justify-between items-center">
+              <div>
+                <h3 class="text-lg font-bold text-white font-display">Статистика прибутків (2026)</h3>
+                <p class="text-xs text-gray-500">Динаміка виручки по місяцях (тис. грн)</p>
+              </div>
+              <span class="px-3 py-1.5 rounded-xl bg-dark-card border border-dark-border text-[10px] font-bold text-white uppercase tracking-wider">Річний звіт</span>
+            </div>
             
-            <div class="grid grid-cols-12 h-full">
-              <!-- Left Chat Column: Client selector (4 cols) -->
-              <div class="col-span-4 bg-dark-card border-r border-dark-border flex flex-col">
-                <div class="p-3 border-b border-dark-border text-[9px] font-extrabold uppercase tracking-widest text-gray-500">
-                  Активні чати
-                </div>
-                <div class="flex-grow overflow-y-auto custom-scrollbar divide-y divide-dark-border/30" id="chats-list-container">
-                  <!-- Чат-контакти генеруються динамічно -->
-                </div>
-              </div>
-
-              <!-- Right Chat Column: Selected Chat Pane (8 cols) -->
-              <div class="col-span-8 flex flex-col h-full bg-dark-slate/40">
-                <!-- Chat Header -->
-                <div class="bg-dark-card/90 border-b border-dark-border p-3.5 flex items-center justify-between" id="active-chat-header">
-                  <!-- Заголовок активного чату -->
-                </div>
-
-                <!-- Messages container -->
-                <div class="flex-grow p-4 space-y-4 overflow-y-auto custom-scrollbar" id="messages-container">
-                  <!-- Повідомлення -->
-                </div>
-
-                <!-- Input form -->
-                <form onsubmit="handleSendAdminMessage(event)" class="bg-dark-card p-3 border-t border-dark-border flex gap-2">
-                  <input type="text" id="admin-chat-input" placeholder="Введіть повідомлення клієнту..." class="flex-grow bg-dark-slate border border-dark-border rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-[var(--color-primary)] placeholder-gray-600">
-                  <button type="submit" class="w-10.5 h-10.5 rounded-xl bg-[var(--color-primary)] text-white flex items-center justify-center transition-colors">
-                    <svg class="w-5 h-5 transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-                  </button>
-                </form>
+            <!-- SVG Chart -->
+            <div class="h-64 w-full relative pt-4 flex items-end">
+              <svg class="w-full h-full text-[var(--color-primary)]" viewBox="0 0 500 180" preserveAspectRatio="none">
+                <!-- Gradients -->
+                <defs>
+                  <linearGradient id="chart-glow" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="var(--color-primary)" stop-opacity="0.45" />
+                    <stop offset="100%" stop-color="var(--color-primary)" stop-opacity="0" />
+                  </linearGradient>
+                </defs>
+                <!-- Grid lines -->
+                <line x1="0" y1="30" x2="500" y2="30" stroke="#222F47" stroke-dasharray="4" stroke-width="0.5"/>
+                <line x1="0" y1="80" x2="500" y2="80" stroke="#222F47" stroke-dasharray="4" stroke-width="0.5"/>
+                <line x1="0" y1="130" x2="500" y2="130" stroke="#222F47" stroke-dasharray="4" stroke-width="0.5"/>
+                
+                <!-- Area -->
+                <path d="M 0 180 L 0 150 L 80 130 L 160 110 L 240 120 L 320 80 L 400 45 L 500 25 L 500 180 Z" fill="url(#chart-glow)"/>
+                <!-- Line -->
+                <path d="M 0 150 L 80 130 L 160 110 L 240 120 L 320 80 L 400 45 L 500 25" fill="none" stroke="url(#gradient-bg)" stroke-width="3" stroke-linecap="round"/>
+                
+                <!-- Dots -->
+                <circle cx="80" cy="130" r="4.5" fill="var(--color-secondary)" stroke="#080B11" stroke-width="1.5"/>
+                <circle cx="160" cy="110" r="4.5" fill="var(--color-primary)" stroke="#080B11" stroke-width="1.5"/>
+                <circle cx="240" cy="120" r="4.5" fill="var(--color-primary)" stroke="#080B11" stroke-width="1.5"/>
+                <circle cx="320" cy="80" r="4.5" fill="var(--color-secondary)" stroke="#080B11" stroke-width="1.5"/>
+                <circle cx="400" cy="45" r="4.5" fill="var(--color-primary)" stroke="#080B11" stroke-width="1.5"/>
+                <circle cx="500" cy="25" r="4.5" fill="var(--color-secondary)" stroke="#080B11" stroke-width="1.5"/>
+              </svg>
+              <!-- X axis labels -->
+              <div class="absolute bottom-0 left-0 right-0 flex justify-between px-1 text-[9px] font-bold text-gray-500 uppercase tracking-widest pt-2">
+                <span>Січ</span>
+                <span>Лют</span>
+                <span>Бер</span>
+                <span>Квіт</span>
+                <span>Трав</span>
+                <span>Черв</span>
               </div>
             </div>
+          </div>
 
+          <!-- Live Feed Notifications (5 cols) -->
+          <div class="lg:col-span-5 bg-dark-slate border border-dark-border rounded-3xl p-6.5 flex flex-col justify-between h-full">
+            <div class="space-y-4">
+              <h3 class="text-base font-bold text-white font-display">Стрічка подій платформи</h3>
+              <div class="space-y-3.5" id="admin-logs-feed">
+                <!-- Filled dynamically -->
+                <div class="flex items-start gap-3 text-xs bg-dark-obsidian/40 border border-dark-border/30 rounded-xl p-3">
+                  <span class="w-2.5 h-2.5 rounded-full bg-[var(--color-primary)] mt-1 animate-pulse"></span>
+                  <div>
+                    <p class="font-bold text-white">Нове замовлення на оцінку</p>
+                    <p class="text-gray-500 text-[10px]">Користувач student@example.com створив заявку</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 text-xs bg-dark-obsidian/40 border border-dark-border/30 rounded-xl p-3">
+                  <span class="w-2.5 h-2.5 rounded-full bg-green-500 mt-1"></span>
+                  <div>
+                    <p class="font-bold text-white">Оплата 50% успішна</p>
+                    <p class="text-gray-500 text-[10px]">Клієнт сплатив замовлення АС-4930</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 text-xs bg-dark-obsidian/40 border border-dark-border/30 rounded-xl p-3">
+                  <span class="w-2.5 h-2.5 rounded-full bg-[var(--color-secondary)] mt-1"></span>
+                  <div>
+                    <p class="font-bold text-white">Дмитро (Доцент) завантажив чернетку</p>
+                    <p class="text-gray-500 text-[10px]">Надіслано проміжний звіт по роботі АС-4929</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button onclick="simulateAddOrder()" class="mt-6 w-full py-3.5 bg-dark-obsidian border border-dark-border rounded-xl text-xs font-bold text-white hover:bg-dark-border transition-colors">
+              Згенерувати тестове замовлення
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN VIEW 2: ORDER MANAGEMENT -->
+      <div id="admin-sec-orders" class="hidden space-y-6">
+        <div class="flex justify-between items-center flex-wrap gap-4">
+          <h3 class="text-xl font-bold text-white font-display">Реєстр всіх замовлень в системі</h3>
+          <div class="flex gap-2">
+            <button onclick="filterAdminOrders('all')" id="admin-tab-ord-all" class="px-3.5 py-1.5 text-xs font-bold rounded-lg bg-[var(--color-primary)] text-white">Всі</button>
+            <button onclick="filterAdminOrders('Awaiting Quote')" id="admin-tab-ord-quote" class="px-3.5 py-1.5 text-xs font-bold rounded-lg bg-dark-slate border border-dark-border text-gray-400 hover:text-white">Очікують оцінки</button>
+            <button onclick="filterAdminOrders('In Work')" id="admin-tab-ord-work" class="px-3.5 py-1.5 text-xs font-bold rounded-lg bg-dark-slate border border-dark-border text-gray-400 hover:text-white">В роботі</button>
+            <button onclick="filterAdminOrders('Completed')" id="admin-tab-ord-completed" class="px-3.5 py-1.5 text-xs font-bold rounded-lg bg-dark-slate border border-dark-border text-gray-400 hover:text-white">Готові</button>
+          </div>
+        </div>
+
+        <div class="bg-dark-slate border border-dark-border rounded-3xl overflow-hidden shadow-2xl">
+          <div class="overflow-x-auto custom-scrollbar">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="bg-dark-card border-b border-dark-border text-gray-400 uppercase tracking-widest text-[9px] font-extrabold">
+                  <th class="p-4">ID / Назва</th>
+                  <th class="p-4">Клієнт</th>
+                  <th class="p-4">Дисципліна</th>
+                  <th class="p-4">Ціна (₴)</th>
+                  <th class="p-4">Статус</th>
+                  <th class="p-4">Виконавець</th>
+                  <th class="p-4 text-right">Дії</th>
+                </tr>
+              </thead>
+              <tbody id="admin-orders-table-body" class="divide-y divide-dark-border/40">
+                <!-- Generated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN VIEW 3: EMPLOYEES BASE -->
+      <div id="admin-sec-employees" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Side: Writers Directory (8 cols) -->
+        <div class="lg:col-span-8 space-y-6">
+          <h3 class="text-xl font-bold text-white font-display">Реєстр академічних виконавців</h3>
+          <div class="bg-dark-slate border border-dark-border rounded-3xl overflow-hidden shadow-2xl">
+            <div class="overflow-x-auto custom-scrollbar">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr class="bg-dark-card border-b border-dark-border text-gray-400 uppercase tracking-widest text-[9px] font-extrabold">
+                    <th class="p-4">Виконавець</th>
+                    <th class="p-4">Ступінь</th>
+                    <th class="p-4">Спеціалізація</th>
+                    <th class="p-4 text-center">Рейтинг</th>
+                    <th class="p-4 text-center">Виконано</th>
+                    <th class="p-4 text-center">Зараз в роботі</th>
+                    <th class="p-4 text-right">Дії</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-writers-table-body" class="divide-y divide-dark-border/40">
+                  <!-- Generated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Add/Hire Writer Form (4 cols) -->
+        <div class="lg:col-span-4 space-y-6">
+          <h3 class="text-xl font-bold text-white font-display">Найняти нового автора</h3>
+          <div class="bg-dark-slate border border-dark-border rounded-3xl p-6 shadow-2xl relative">
+            <form onsubmit="handleHireWriter(event)" class="space-y-4">
+              <div class="space-y-1">
+                <label class="text-[9px] font-extrabold uppercase tracking-widest text-gray-500">ПІБ Автора *</label>
+                <input type="text" id="hire-name" required placeholder="Ірина М. (Доцент)" class="w-full bg-dark-obsidian border border-dark-border rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[var(--color-primary)]">
+              </div>
+              <div class="space-y-1">
+                <label class="text-[9px] font-extrabold uppercase tracking-widest text-gray-500">Науковий ступінь *</label>
+                <input type="text" id="hire-degree" required placeholder="Кандидат юр. наук" class="w-full bg-dark-obsidian border border-dark-border rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[var(--color-primary)]">
+              </div>
+              <div class="space-y-1">
+                <label class="text-[9px] font-extrabold uppercase tracking-widest text-gray-500">Спеціалізація *</label>
+                <input type="text" id="hire-specialization" required placeholder="Цивільне право, Конституційне право" class="w-full bg-dark-obsidian border border-dark-border rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[var(--color-primary)]">
+              </div>
+              <div class="space-y-1">
+                <label class="text-[9px] font-extrabold uppercase tracking-widest text-gray-500">Електронна пошта для входу *</label>
+                <input type="email" id="hire-email" required placeholder="iryna@papermentor.com" class="w-full bg-dark-obsidian border border-dark-border rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[var(--color-primary)]">
+              </div>
+              <div class="space-y-1">
+                <label class="text-[9px] font-extrabold uppercase tracking-widest text-gray-500">Тимчасовий пароль *</label>
+                <input type="text" id="hire-password" required value="writer123" class="w-full bg-dark-obsidian border border-dark-border rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[var(--color-primary)]">
+              </div>
+              <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white font-bold text-xs shadow-md transition-all transform hover:-translate-y-0.5">
+                Зареєструвати автора в базі
+              </button>
+            </form>
           </div>
         </div>
 
       </div>
-    </div>
 
-  </main>
+      <!-- ADMIN VIEW 4: GLOBAL SUPPORT CHATS -->
+      <div id="admin-sec-chats" class="hidden space-y-6">
+        <h3 class="text-xl font-bold text-white font-display">Канал глобальної клієнтської підтримки</h3>
+        
+        <div class="bg-dark-slate border border-dark-border rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[580px]">
+          <div class="grid grid-cols-12 h-full">
+            
+            <!-- Left Chats selector -->
+            <div class="col-span-4 bg-dark-card border-r border-dark-border flex flex-col">
+              <div class="p-3 border-b border-dark-border text-[9px] font-extrabold uppercase tracking-widest text-gray-500">Всі діалоги системи</div>
+              <div class="flex-grow overflow-y-auto custom-scrollbar divide-y divide-dark-border/30" id="admin-chats-list-container">
+                <!-- Filled dynamically -->
+              </div>
+            </div>
 
-  <!-- Notification Toast -->
-  <div id="admin-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 pointer-events-none transition-all duration-300">
-    <div class="bg-dark-card border border-[var(--color-primary)]/30 rounded-2xl p-4.5 shadow-2xl flex items-center gap-4 max-w-sm">
-      <div class="w-10 h-10 rounded-xl bg-opacity-15 bg-[var(--color-primary)] flex items-center justify-center text-[var(--color-primary)] shadow-inner border border-[var(--color-primary)]/20">
-        <svg class="w-5.5 h-5.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
+            <!-- Right Chat content -->
+            <div class="col-span-8 flex flex-col h-full bg-dark-slate/40">
+              <div class="bg-dark-card/90 border-b border-dark-border p-3.5 flex items-center justify-between" id="admin-active-chat-header">
+                <!-- Filled dynamically -->
+              </div>
+              <div class="flex-grow p-4 space-y-4 overflow-y-auto custom-scrollbar" id="admin-messages-container">
+                <!-- Messages list -->
+              </div>
+              <form onsubmit="handleSendSupportMessage(event)" class="bg-dark-card p-3 border-t border-dark-border flex gap-2">
+                <input type="text" id="support-chat-input" placeholder="Введіть відповідь від імені підтримки..." class="flex-grow bg-dark-slate border border-dark-border rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-[var(--color-primary)] placeholder-gray-600">
+                <button type="submit" class="w-10.5 h-10.5 rounded-xl bg-[var(--color-secondary)] text-white flex items-center justify-center transition-colors">
+                  <svg class="w-5 h-5 transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                </button>
+              </form>
+            </div>
+            
+          </div>
+        </div>
       </div>
-      <div>
-        <p class="text-sm font-bold text-white" id="toast-title-text">Готово!</p>
-        <p class="text-xs text-gray-400" id="toast-desc-text">Опис операції.</p>
-      </div>
-    </div>
-  </div>
 
-  <!-- Footer -->
-  <footer class="bg-dark-obsidian border-t border-dark-border/50 py-8 relative z-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-gray-500">
-      <p>&copy; 2026 PaperMentor. Панель Авторів. Smart Academic Ecosystem. Усі права захищено.</p>
+      <!-- ADMIN VIEW 5: SETTINGS -->
+      <div id="admin-sec-settings" class="hidden space-y-6">
+        <h3 class="text-xl font-bold text-white font-display">Адміністративні конфігурації</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="bg-dark-slate border border-dark-border rounded-3xl p-6.5 space-y-4">
+            <h4 class="text-base font-bold text-white">Керування станом локальної БД</h4>
+            <p class="text-xs text-gray-400 leading-relaxed">Якщо дані стали некоректними або ви бажаєте повернути систему у початковий демонстраційний стан із тестовими замовленнями, натисніть кнопку нижче.</p>
+            <button onclick="resetSystemDatabase()" class="px-5 py-3 rounded-xl bg-red-500/10 border border-red-500/25 text-red-400 hover:bg-red-500/20 text-xs font-bold transition-all">
+              Очистити і перезапустити БД (Reset)
+            </button>
+          </div>
+          
+          <div class="bg-dark-slate border border-dark-border rounded-3xl p-6.5 space-y-4">
+            <h4 class="text-base font-bold text-white">Параметри платіжного шлюзу</h4>
+            <p class="text-xs text-gray-400 leading-relaxed">Симуляція процесу оплати. Ви можете увімкнути режим автоматичного підтвердження або зняття грошей без перевірки.</p>
+            <div class="flex items-center gap-3">
+              <input type="checkbox" id="sett-auto-pay" class="w-4.5 h-4.5 rounded bg-dark-obsidian border-dark-border accent-[var(--color-primary)]" checked>
+              <label for="sett-auto-pay" class="text-xs text-gray-300 font-medium select-none">Автоматично приймати платежі без модерації</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </footer>
 
   <!-- Javascript Logic -->
   <script>
-    // State of admin panel
-    const adminState = {
-      role: 'writer', // 'writer' or 'admin'
-      earnings: 18450,
-      activeOrders: 2,
-      completedOrders: 24,
-      selectedClientId: '409281',
-      selectedOrderId: 'АС-4929',
-      currentTab: 'all',
-      orders: [
-        {
-          id: 'АС-4929',
-          clientId: '409281',
-          clientName: 'Дмитро К. (Студент)',
-          title: 'Курсова робота з макроекономіки',
-          status: 'В роботі',
-          statusIdx: 1, // 0 = TZ, 1 = Work, 2 = Review, 3 = Done
-          deadline: '24.06.2026',
-          price: 2200,
-          type: 'in_work',
-          needsQuote: false
-        },
-        {
-          id: 'АС-4930',
-          clientId: '409281',
-          clientName: 'Дмитро К. (Студент)',
-          title: 'Лабораторна робота з алгоритмів на C++',
-          status: 'На вашій перевірці', // Means review draft uploaded
-          statusIdx: 2,
-          deadline: '20.06.2026',
-          price: 1500,
-          type: 'in_work',
-          needsQuote: false
-        },
-        {
-          id: 'АС-9821',
-          clientId: '902812',
-          clientName: 'Олена В. (Студент)',
-          title: 'Реферат / Есе: Сучасні стратегії бренд-маркетингу',
-          status: 'Очікує оцінки',
-          statusIdx: 0,
-          deadline: '12.07.2026',
-          price: 0,
-          type: 'review',
-          needsQuote: true
+    // Local client-side DB wrapper
+    const DB = {
+      get(key, defaultVal) {
+        const data = localStorage.getItem(key);
+        if (!data) return defaultVal;
+        try {
+          return JSON.parse(data);
+        } catch(e) {
+          return defaultVal;
         }
-      ]
+      },
+      set(key, val) {
+        localStorage.setItem(key, JSON.stringify(val));
+        window.dispatchEvent(new Event('storage'));
+      },
+      init() {
+        if (!localStorage.getItem('pm_writers')) {
+          this.set('pm_writers', [
+            { id: 'writer-dmitro', name: 'Дмитро (Доцент)', title: 'Кандидат екон. наук', specialization: 'Макроекономіка, Фінанси', rating: 4.95, completedCount: 50, activeOrdersCount: 1 },
+            { id: 'writer-oleksiy', name: 'Олексій (Сеньйор)', title: 'Сеньйор Розробник', specialization: 'C++, Алгоритми, Java', rating: 4.88, completedCount: 32, activeOrdersCount: 1 },
+            { id: 'writer-olena', name: 'Олена (Кандидат)', title: 'Кандидат філол. наук', specialization: 'Англійська філологія, Маркетинг', rating: 4.97, completedCount: 78, activeOrdersCount: 0 }
+          ]);
+        }
+        if (!localStorage.getItem('pm_users')) {
+          this.set('pm_users', [
+            { email: 'bulbafri@papermentor.com', name: 'bulbafri', password: 'admin123', role: 'admin', balance: 5000 },
+            { email: 'admin@papermentor.com', name: 'Адміністратор', password: 'admin123', role: 'admin', balance: 10000 },
+            { email: 'writer@papermentor.com', name: 'Дмитро (Доцент)', password: 'writer123', role: 'writer', writerId: 'writer-dmitro', balance: 18450 },
+            { email: 'oleksiy@papermentor.com', name: 'Олексій (Сеньйор)', password: 'writer123', role: 'writer', writerId: 'writer-oleksiy', balance: 9400 },
+            { email: 'student@example.com', name: 'Дмитро К.', password: 'student123', role: 'student', balance: 2500 }
+          ]);
+        }
+        if (!localStorage.getItem('pm_orders')) {
+          this.set('pm_orders', [
+            {
+              id: 'АС-4929',
+              clientEmail: 'student@example.com',
+              clientName: 'Дмитро К.',
+              title: 'Курсова робота з макроекономіки',
+              subject: 'Макроекономіка',
+              pages: 30,
+              price: 2200,
+              status: 'В процесі написання',
+              statusIdx: 1,
+              writerId: 'writer-dmitro',
+              deadline: '24.06.2026',
+              files: []
+            },
+            {
+              id: 'АС-4930',
+              clientEmail: 'student@example.com',
+              clientName: 'Дмитро К.',
+              title: 'Лабораторна робота з алгоритмів на C++',
+              subject: 'Програмування C++',
+              pages: 12,
+              price: 1500,
+              status: 'На вашій перевірці',
+              statusIdx: 2,
+              writerId: 'writer-oleksiy',
+              deadline: '20.06.2026',
+              files: ['ТЗ_v1.zip']
+            }
+          ]);
+        }
+        if (!localStorage.getItem('pm_messages')) {
+          this.set('pm_messages', [
+            { orderId: 'АС-4929', sender: 'writer', senderName: 'Дмитро (Доцент)', text: "Вітаю! Отримав вашу тему та методичку. Почав аналізувати джерела та формувати вступну частину. Чи є специфічні побажання щодо плану роботи від керівника?", timestamp: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString() },
+            { orderId: 'АС-4929', sender: 'student', senderName: 'Дмитро К.', text: "Доброго дня! Так, викладач просив обов'язково включити статистику за 2024-2025 роки у розділ з практичним аналізом.", timestamp: new Date(Date.now() - 1000 * 60 * 60 * 4.5).toISOString() },
+            { orderId: 'АС-4929', sender: 'writer', senderName: 'Дмитро (Доцент)', text: "Зрозумів. Якраз використовую свіжу аналітику Мінфіну та Нацбанку. Завтра зранку надішлю план на погодження.", timestamp: new Date(Date.now() - 1000 * 60 * 60 * 4).toISOString() },
+            { orderId: 'АС-4930', sender: 'writer', senderName: 'Олексій (Сеньйор)', text: "Привіт! Лабораторну роботу повністю закінчено. Код написаний на C++, структурований, додав коментарі до кожної функції. Будь ласка, перевірте роботу у вкладеному ZIP архіві.", timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString() },
+            { orderId: 'АС-4930', sender: 'student', senderName: 'Дмитро К.', text: "Дуже дякую, зараз завантажу та подивлюсь.", timestamp: new Date(Date.now() - 1000 * 60 * 60 * 1.5).toISOString() },
+            { orderId: 'АС-4930', sender: 'writer', senderName: 'Олексій (Сеньйор)', text: "Якщо виникнуть питання з налаштуванням або компіляцією — одразу пишіть сюди, я онлайн!", timestamp: new Date(Date.now() - 1000 * 60 * 60 * 1).toISOString() }
+          ]);
+        }
+      }
     };
 
-    // Chats history database
-    const chatHistories = {
-      'АС-4929': [
-        { sender: 'writer', text: "Вітаю! Отримав вашу тему та методичку. Почав аналізувати джерела та формувати вступну частину. Чи є специфічні побажання щодо плану роботи від керівника?" },
-        { sender: 'user', text: "Доброго дня! Так, викладач просив обов'язково включити статистику за 2024-2025 роки у розділ з практичним аналізом." },
-        { sender: 'writer', text: "Зрозумів. Якраз використовую свіжу аналітику Мінфіну та Нацбанку. Завтра зранку надішлю план на погодження." }
-      ],
-      'АС-4930': [
-        { sender: 'writer', text: "Привіт! Лабораторну роботу повністю закінчено. Код написаний на C++, структурований, додав коментарі до кожної функції. Будь ласка, перевірте роботу у вкладеному ZIP архіві." },
-        { sender: 'user', text: "Дуже дякую, зараз завантажу та подивлюсь." },
-        { sender: 'writer', text: "Якщо виникнуть питання з налаштуванням або компіляцією — одразу пишіть сюди, я онлайн!" }
-      ],
-      'АС-9821': [
-        { sender: 'user', text: "Вітаю! Мені потрібен реферат на 15 сторінок про стратегії бренд-маркетингу. Скільки це буде коштувати та коли зможете зробити?" },
-        { sender: 'writer', text: "Добрий день! Очікуйте, будь ласка, наразі ми оцінюємо обсяг та складність вашої теми." }
-      ]
-    };
+    // Initialize Database
+    DB.init();
 
-    // Client simulated replies
-    const clientAutoReplies = [
-      "Дякую за інформацію, очікую на результати.",
-      "Чудово! Перевірю файл найближчим часом та напишу вам.",
-      "Скажіть, чи вийде додати ще одну таблицю у другий розділ?",
-      "Усе виглядає професійно. Дякую за швидку відповідь!"
-    ];
-    let replyIdx = 0;
+    // Session and view states
+    let currentSession = DB.get('pm_session', null);
+    let adminCurrentTab = 'overview'; // 'overview' | 'orders' | 'employees' | 'chats' | 'settings'
+    let writerCurrentTab = 'all'; // 'all' | 'in_work' | 'review' | 'done'
+    
+    // Writers temporary active selection variables
+    let selectedOrderId = null;
+    let selectedClientId = null;
+    
+    // Admin Support Chat active selection
+    let adminSelectedOrderId = null;
 
-    // Toast helper
+    // Toast Notification helper
     function showToast(title, desc) {
       const toast = document.getElementById('admin-toast');
       document.getElementById('toast-title-text').innerText = title;
@@ -525,59 +774,11 @@
       }, 3500);
     }
 
-    // Quick Login Autofill
-    function quickFill(role) {
-      if (role === 'writer') {
-        document.getElementById('login-email').value = 'writer@papermentor.com';
-        document.getElementById('login-password').value = 'writer123';
-      } else {
-        document.getElementById('login-email').value = 'admin@papermentor.com';
-        document.getElementById('login-password').value = 'admin123';
-      }
-    }
-
-    // Handle Login Flow
-    function handleLogin(event) {
-      event.preventDefault();
-      const email = document.getElementById('login-email').value;
-      
-      if (email.includes('admin')) {
-        adminState.role = 'admin';
-        document.getElementById('role-badge').innerText = 'Адміністратор';
-        document.getElementById('role-badge').className = 'px-2.5 py-0.5 text-[9px] font-extrabold rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 uppercase tracking-widest';
-      } else {
-        adminState.role = 'writer';
-        document.getElementById('role-badge').innerText = 'Виконавець';
-        document.getElementById('role-badge').className = 'px-2.5 py-0.5 text-[9px] font-extrabold rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase tracking-widest';
-      }
-
-      // Transition animation
-      document.getElementById('login-panel').classList.add('opacity-0', 'scale-95');
-      setTimeout(() => {
-        document.getElementById('login-panel').classList.add('hidden');
-        document.getElementById('dashboard-panel').classList.remove('hidden');
-        
-        renderOrders();
-        renderChatsList();
-        renderActiveChat();
-        
-        showToast('Вхід успішний!', `Ласкаво просимо до кабінету.`);
-      }, 300);
-    }
-
-    // Handle Logout
-    function handleLogout() {
-      document.getElementById('dashboard-panel').classList.add('hidden');
-      document.getElementById('login-panel').classList.remove('hidden', 'opacity-0', 'scale-95');
-      document.getElementById('login-panel').classList.add('opacity-100', 'scale-100');
-      showToast('Вихід з системи', 'Сесію успішно завершено.');
-    }
-
-    // Switch color themes
+    // Switch theme customizer
     function changeTheme(themeName) {
       document.body.classList.remove('theme-violet', 'theme-sunset', 'theme-emerald', 'theme-cyber-blue', 'theme-glacier', 'theme-harvard', 'theme-platinum');
       if (themeName !== 'sunset') {
-        document.body.classList.add(`theme-${themeName}`);
+        document.body.classList.add("theme-" + themeName);
       }
       
       let themeTitle = 'Sunset Neon';
@@ -588,28 +789,152 @@
       if (themeName === 'harvard') themeTitle = 'Crimson Gold';
       if (themeName === 'platinum') themeTitle = 'Obsidian Platinum';
       
-      showToast('Колір змінено!', `Встановлено палітру: ${themeTitle}`);
+      showToast('Колір змінено!', "Встановлено палітру: " + themeTitle);
     }
 
-    // Filter Orders by tabs
+    // Quick Login autofill form inputs
+    function quickFill(role) {
+      if (role === 'writer') {
+        document.getElementById('login-email').value = 'writer@papermentor.com';
+        document.getElementById('login-password').value = 'writer123';
+      } else {
+        document.getElementById('login-email').value = 'bulbafri@papermentor.com';
+        document.getElementById('login-password').value = 'admin123';
+      }
+    }
+
+    // Handle credentials validation
+    function handleLogin(event) {
+      event.preventDefault();
+      const email = document.getElementById('login-email').value.trim().toLowerCase();
+      const password = document.getElementById('login-password').value;
+
+      const users = DB.get('pm_users', []);
+      const matchedUser = users.find(u => u.email === email && u.password === password);
+
+      if (!matchedUser || (matchedUser.role !== 'admin' && matchedUser.role !== 'writer')) {
+        alert('Помилка: невірний email, пароль або цей аккаунт не має доступу до адмін-панелі.');
+        return;
+      }
+
+      currentSession = matchedUser;
+      DB.set('pm_session', currentSession);
+
+      renderDashboardState();
+    }
+
+    // Handle logout session end
+    function handleLogout() {
+      currentSession = null;
+      localStorage.removeItem('pm_session');
+      
+      document.getElementById('dashboard-panel').classList.add('hidden');
+      document.getElementById('login-panel').classList.remove('hidden', 'opacity-0', 'scale-95');
+      document.getElementById('login-panel').classList.add('opacity-100', 'scale-100');
+      
+      showToast('Вихід з системи', 'Сесію успішно завершено.');
+    }
+
+    // Main render state distributor
+    function renderDashboardState() {
+      if (!currentSession) {
+        document.getElementById('login-panel').classList.remove('hidden');
+        document.getElementById('dashboard-panel').classList.add('hidden');
+        return;
+      }
+
+      // Hide login, show dashboard
+      document.getElementById('login-panel').classList.add('hidden');
+      document.getElementById('dashboard-panel').classList.remove('hidden');
+
+      const roleBadge = document.getElementById('role-badge');
+      const tabsNav = document.getElementById('admin-tabs-nav');
+      
+      // Reset selected orders on render init
+      const orders = DB.get('pm_orders', []);
+
+      if (currentSession.role === 'admin') {
+        roleBadge.innerText = 'Адміністратор';
+        roleBadge.className = 'px-2.5 py-0.5 text-[9px] font-extrabold rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 uppercase tracking-widest';
+        tabsNav.classList.remove('hidden');
+
+        // Hide writer panel
+        document.getElementById('writer-sec-dashboard').classList.add('hidden');
+
+        // Switch to the active admin section view
+        switchAdminTab(adminCurrentTab);
+      } else {
+        roleBadge.innerText = 'Виконавець';
+        roleBadge.className = 'px-2.5 py-0.5 text-[9px] font-extrabold rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase tracking-widest';
+        tabsNav.classList.add('hidden');
+
+        // Show writer panel, hide admin sections
+        document.getElementById('writer-sec-dashboard').classList.remove('hidden');
+        document.getElementById('admin-sec-overview').classList.add('hidden');
+        document.getElementById('admin-sec-orders').classList.add('hidden');
+        document.getElementById('admin-sec-employees').classList.add('hidden');
+        document.getElementById('admin-sec-chats').classList.add('hidden');
+        document.getElementById('admin-sec-settings').classList.add('hidden');
+
+        // Setup active order selection for writer
+        const writerOrders = orders.filter(o => o.writerId === currentSession.writerId);
+        if (writerOrders.length > 0 && !selectedOrderId) {
+          selectedOrderId = writerOrders[0].id;
+          selectedClientId = writerOrders[0].clientEmail;
+        }
+
+        renderWriterStats();
+        renderWriterOrders();
+        renderWriterChatsList();
+        renderWriterActiveChat();
+      }
+    }
+
+    // ----------------------------------------------------
+    // WRITER ROLE PANEL LOGIC
+    // ----------------------------------------------------
+    function renderWriterStats() {
+      const orders = DB.get('pm_orders', []);
+      const writerOrders = orders.filter(o => o.writerId === currentSession.writerId);
+
+      const activeCount = writerOrders.filter(o => o.statusIdx === 1 || o.statusIdx === 2).length;
+      const completedCount = writerOrders.filter(o => o.statusIdx === 3).length;
+      
+      // Calculate writer earnings (sum of completed assigned orders + 50% of in work)
+      let earnings = 0;
+      writerOrders.forEach(o => {
+        if (o.statusIdx === 3) earnings += o.price;
+        else if (o.statusIdx === 1 || o.statusIdx === 2) earnings += Math.round(o.price * 0.5);
+      });
+
+      document.getElementById('stat-earnings').innerText = earnings.toLocaleString('uk-UA') + ' ₴';
+      document.getElementById('stat-active').innerText = activeCount;
+      document.getElementById('stat-completed').innerText = completedCount;
+    }
+
     function filterOrders(tabName) {
-      adminState.currentTab = tabName;
+      writerCurrentTab = tabName;
       document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.className = 'tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-dark-slate border border-dark-border text-gray-400 hover:text-white transition-all';
       });
-      document.getElementById(`tab-${tabName}`).className = 'tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-[var(--color-primary)] text-white transition-all';
+      document.getElementById('tab-' + tabName).className = 'tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-[var(--color-primary)] text-white transition-all';
       
-      renderOrders();
+      renderWriterOrders();
     }
 
-    // Render Orders Cards
-    function renderOrders() {
+    function renderWriterOrders() {
       const container = document.getElementById('orders-list-container');
+      if (!container) return;
       container.innerHTML = '';
 
-      const filtered = adminState.orders.filter(order => {
-        if (adminState.currentTab === 'all') return true;
-        return order.type === adminState.currentTab;
+      const allOrders = DB.get('pm_orders', []);
+      const writerOrders = allOrders.filter(o => o.writerId === currentSession.writerId);
+
+      const filtered = writerOrders.filter(order => {
+        if (writerCurrentTab === 'all') return true;
+        if (writerCurrentTab === 'in_work') return order.statusIdx === 1;
+        if (writerCurrentTab === 'review') return order.statusIdx === 2;
+        if (writerCurrentTab === 'done') return order.statusIdx === 3;
       });
 
       if (filtered.length === 0) {
@@ -623,64 +948,31 @@
 
       filtered.forEach(order => {
         const card = document.createElement('div');
-        const isActive = order.id === adminState.selectedOrderId;
+        const isActive = order.id === selectedOrderId;
         const borderStyle = isActive ? 'border-[var(--color-primary)]/50 bg-dark-card/45' : 'border-dark-border/60';
-        card.className = `bg-dark-slate border ${borderStyle} rounded-2xl p-6 space-y-4 hover:border-gray-500/20 transition-all cursor-pointer`;
-        card.setAttribute('onclick', `selectActiveOrder('${order.id}', '${order.clientId}')`);
+        card.className = "bg-dark-slate border " + borderStyle + " rounded-2xl p-6 space-y-4 hover:border-gray-500/20 transition-all cursor-pointer";
+        card.setAttribute('onclick', "selectActiveOrder('" + order.id + "', '" + order.clientEmail + "')");
 
         let statusBadgeClass = 'bg-opacity-15 bg-[var(--color-secondary)] text-[var(--color-secondary)] border border-[var(--color-secondary)]/25';
-        if (order.status.includes('перевірці')) {
+        if (order.statusIdx === 2) {
           statusBadgeClass = 'bg-opacity-15 bg-[var(--color-primary)] text-[var(--color-primary)] border border-[var(--color-primary)]/25';
-        } else if (order.status.includes('Очікує')) {
-          statusBadgeClass = 'bg-gray-500/15 text-gray-400 border border-gray-500/25';
-        } else if (order.status.includes('Завершено') || order.status.includes('Готово')) {
+        } else if (order.statusIdx === 3) {
           statusBadgeClass = 'bg-green-500/15 text-green-400 border border-green-500/25';
         }
 
-        // Bidding interface or progress interface
         let actionFormHtml = '';
-        if (order.needsQuote) {
-          actionFormHtml = `
-            <div class="pt-3 border-t border-dark-border/40 space-y-3" onclick="event.stopPropagation()">
-              <label class="block text-[10px] text-gray-500 uppercase tracking-wider font-bold">Оцінка вартості проекту:</label>
-              <div class="flex gap-2">
-                <input type="number" id="quote-${order.id}" placeholder="Введіть ціну (₴)" class="w-1/2 bg-dark-obsidian border border-dark-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[var(--color-primary)]">
-                <button onclick="submitPriceQuote('${order.id}')" class="w-1/2 py-2.5 rounded-xl bg-[var(--color-primary)] hover:bg-opacity-90 text-white font-bold text-xs shadow-md transition-colors">
-                  Надіслати оцінку
-                </button>
-              </div>
-            </div>
-          `;
-        } else if (order.statusIdx === 1) {
-          // In work: show Upload Draft option
+        if (order.statusIdx === 1) {
           actionFormHtml = `
             <div class="pt-3 border-t border-dark-border/40 space-y-3" onclick="event.stopPropagation()">
               <div class="flex items-center justify-between">
-                <span class="text-[10px] text-gray-500 uppercase tracking-wider font-bold">Завантаження проміжного звіту:</span>
-                <span id="upload-status-${order.id}" class="text-[9px] text-gray-400 font-semibold">Файл не обрано</span>
+                <span class="text-[10px] text-gray-500 uppercase tracking-wider font-bold">Надіслати чернетку:</span>
+                <span id="upload-status-` + order.id + `" class="text-[9px] text-[var(--color-secondary)] font-semibold">Готово до завантаження</span>
               </div>
               <div class="flex gap-3">
-                <button onclick="triggerUploadFile('${order.id}')" class="flex-1 py-2.5 bg-dark-obsidian border border-dark-border rounded-xl text-xs font-bold text-white hover:bg-dark-border transition-colors">
-                  Обрати ZIP / DOCX
-                </button>
-                <button onclick="uploadDraftDocument('${order.id}')" class="flex-1 py-2.5 bg-[var(--color-secondary)] hover:bg-opacity-90 rounded-xl text-xs font-bold text-white transition-colors shadow-md">
-                  Надіслати клієнту (50%)
+                <button onclick="uploadDraftDocument('` + order.id + `')" class="w-full py-2.5 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] rounded-xl text-xs font-bold text-white transition-colors shadow-md">
+                  Надіслати звіт про виконання (50%)
                 </button>
               </div>
-              <!-- Simulated Upload Progress Bar -->
-              <div id="progress-container-${order.id}" class="hidden w-full bg-dark-obsidian rounded-full h-1.5 overflow-hidden">
-                <div id="progress-bar-${order.id}" class="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] h-full w-0 transition-all duration-300"></div>
-              </div>
-            </div>
-          `;
-        } else if (order.statusIdx === 2) {
-          // Awaiting user review/approval: button to mark finished (simulation)
-          actionFormHtml = `
-            <div class="pt-3 border-t border-dark-border/40 flex justify-between items-center" onclick="event.stopPropagation()">
-              <span class="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Очікує підтвердження від клієнта</span>
-              <button onclick="simulateClientApproval('${order.id}')" class="px-5 py-2.5 bg-green-500 hover:bg-green-600 rounded-xl text-xs font-bold text-white transition-colors shadow-md">
-                Симулювати прийняття
-              </button>
             </div>
           `;
         }
@@ -688,20 +980,20 @@
         const stepsHtml = `
           <div class="grid grid-cols-4 gap-2 pt-2 text-[9px] font-bold text-center text-gray-500">
             <div class="space-y-1">
-              <span class="block w-full h-1.5 rounded ${order.statusIdx >= 0 ? 'bg-[var(--color-primary)]' : 'bg-dark-border'}"></span>
-              <span class="${order.statusIdx >= 0 ? 'text-[var(--color-primary)]' : ''}">ТЗ створено</span>
+              <span class="block w-full h-1.5 rounded ` + (order.statusIdx >= 0 ? 'bg-[var(--color-primary)]' : 'bg-dark-border') + `"></span>
+              <span class="` + (order.statusIdx >= 0 ? 'text-[var(--color-primary)]' : '') + `">ТЗ створено</span>
             </div>
             <div class="space-y-1">
-              <span class="block w-full h-1.5 rounded ${order.statusIdx >= 1 ? 'bg-[var(--color-primary)]' : 'bg-dark-border'}"></span>
-              <span class="${order.statusIdx >= 1 ? 'text-[var(--color-primary)]' : ''}">В роботі</span>
+              <span class="block w-full h-1.5 rounded ` + (order.statusIdx >= 1 ? 'bg-[var(--color-primary)]' : 'bg-dark-border') + `"></span>
+              <span class="` + (order.statusIdx >= 1 ? 'text-[var(--color-primary)]' : '') + `">В роботі</span>
             </div>
             <div class="space-y-1">
-              <span class="block w-full h-1.5 rounded ${order.statusIdx >= 2 ? 'bg-[var(--color-primary)]' : 'bg-dark-border'}"></span>
-              <span class="${order.statusIdx >= 2 ? 'text-[var(--color-primary)]' : ''}">На перевірці</span>
+              <span class="block w-full h-1.5 rounded ` + (order.statusIdx >= 2 ? 'bg-[var(--color-primary)]' : 'bg-dark-border') + `"></span>
+              <span class="` + (order.statusIdx >= 2 ? 'text-[var(--color-primary)]' : '') + `">На перевірці</span>
             </div>
             <div class="space-y-1">
-              <span class="block w-full h-1.5 rounded ${order.statusIdx >= 3 ? 'bg-[var(--color-primary)]' : 'bg-dark-border'}"></span>
-              <span class="${order.statusIdx >= 3 ? 'text-[var(--color-primary)]' : ''}">Завершено</span>
+              <span class="block w-full h-1.5 rounded ` + (order.statusIdx >= 3 ? 'bg-[var(--color-primary)]' : 'bg-dark-border') + `"></span>
+              <span class="` + (order.statusIdx >= 3 ? 'text-[var(--color-primary)]' : '') + `">Завершено</span>
             </div>
           </div>
         `;
@@ -709,277 +1001,602 @@
         card.innerHTML = `
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
             <div>
-              <span class="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Замовлення №${order.id} • Клієнт ID:${order.clientId}</span>
-              <h4 class="text-base font-bold text-white">${order.title}</h4>
+              <span class="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Замовлення №` + order.id + ` • Клієнт: ` + order.clientName + `</span>
+              <h4 class="text-base font-bold text-white">` + order.title + `</h4>
             </div>
-            <span class="px-2.5 py-1 text-[10px] font-bold rounded ${statusBadgeClass}">${order.status}</span>
+            <span class="px-2.5 py-1 text-[10px] font-bold rounded ` + statusBadgeClass + `">
+              ` + (order.statusIdx === 1 ? 'В роботі' : (order.statusIdx === 2 ? 'На перевірці' : 'Завершено')) + `
+            </span>
           </div>
 
-          ${stepsHtml}
+          ` + stepsHtml + `
 
           <div class="flex justify-between items-center text-xs text-gray-400">
-            <span>Дедлайн: <strong class="text-white">${order.deadline}</strong></span>
-            <span>Бюджет: <strong class="text-[var(--color-secondary)]">${order.price > 0 ? order.price + ' ₴' : 'оцінюється'}</strong></span>
+            <span>Дедлайн: <strong class="text-white">` + order.deadline + `</strong></span>
+            <span>Ваш гонорар: <strong class="text-[var(--color-secondary)]">` + order.price + ` ₴</strong></span>
           </div>
 
-          ${actionFormHtml}
+          ` + actionFormHtml + `
         `;
         
         container.appendChild(card);
       });
     }
 
-    // Submit Price quote for awaiting order
-    function submitPriceQuote(orderId) {
-      const quoteVal = parseFloat(document.getElementById(`quote-${orderId}`).value);
-      if (isNaN(quoteVal) || quoteVal <= 0) {
-        alert('Будь ласка, введіть коректну ціну замовлення.');
-        return;
-      }
-
-      const order = adminState.orders.find(o => o.id === orderId);
-      if (order) {
-        order.price = quoteVal;
-        order.needsQuote = false;
-        order.status = 'В роботі';
-        order.statusIdx = 1;
-        order.type = 'in_work';
-
-        // Update stats
-        adminState.activeOrders++;
-        document.getElementById('stat-active').innerText = adminState.activeOrders;
-
-        // Initialize empty chat welcome
-        chatHistories[orderId].push({ sender: 'writer', text: `Вітаю! Наш менеджер оцінив роботу. Бюджет встановлено: ${quoteVal} ₴. Я приступаю до написання.` });
-
-        renderOrders();
-        renderChatsList();
-        renderActiveChat();
-        showToast('Оцінку надіслано!', `Замовлення ${orderId} переведено у статус "В роботі".`);
-      }
+    function selectActiveOrder(orderId, clientEmail) {
+      selectedOrderId = orderId;
+      selectedClientId = clientEmail;
+      renderWriterOrders();
+      renderWriterChatsList();
+      renderWriterActiveChat();
     }
 
-    // Trigger local uploader click
-    function triggerUploadFile(orderId) {
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = '.zip,.rar,.docx,.pdf';
-      input.onchange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          document.getElementById(`upload-status-${orderId}`).innerText = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
-          document.getElementById(`upload-status-${orderId}`).classList.className = 'text-[9px] text-[var(--color-secondary)] font-bold';
-        }
-      };
-      input.click();
-    }
-
-    // Upload draft file uploader simulation
-    function uploadDraftDocument(orderId) {
-      const fileLabel = document.getElementById(`upload-status-${orderId}`).innerText;
-      if (fileLabel.includes('не обрано')) {
-        alert('Будь ласка, спочатку оберіть файл роботи на пристрої.');
-        return;
-      }
-
-      const bar = document.getElementById(`progress-bar-${orderId}`);
-      const container = document.getElementById(`progress-container-${orderId}`);
-      
-      container.classList.remove('hidden');
-      bar.style.width = '0%';
-
-      let progress = 0;
-      const interval = setInterval(() => {
-        progress += 20;
-        bar.style.width = `${progress}%`;
-        if (progress >= 100) {
-          clearInterval(interval);
-          
-          setTimeout(() => {
-            const order = adminState.orders.find(o => o.id === orderId);
-            if (order) {
-              order.status = 'На вашій перевірці';
-              order.statusIdx = 2;
-              order.type = 'in_work';
-
-              // Push file message to chat history
-              chatHistories[orderId].push({ sender: 'writer', text: `📎 Надіслано файл: ${fileLabel}. Очікую вашої перевірки та погодження половини оплати.` });
-              
-              renderOrders();
-              renderActiveChat();
-              showToast('Файл надіслано!', `Демо-версію по ${orderId} завантажено та відправлено клієнту.`);
-            }
-          }, 400);
-        }
-      }, 200);
-    }
-
-    // Simulate client accepting finished paper
-    function simulateClientApproval(orderId) {
-      const order = adminState.orders.find(o => o.id === orderId);
-      if (order) {
-        order.status = 'Завершено';
-        order.statusIdx = 3;
-        order.type = 'done';
-
-        // Add earnings
-        adminState.earnings += order.price;
-        adminState.activeOrders--;
-        adminState.completedOrders++;
-
-        document.getElementById('stat-earnings').innerText = adminState.earnings.toLocaleString('uk-UA') + ' ₴';
-        document.getElementById('stat-active').innerText = adminState.activeOrders;
-        document.getElementById('stat-completed').innerText = adminState.completedOrders;
-
-        chatHistories[orderId].push({ sender: 'user', text: `Дякую! Робота перевірена, все виконано супер. Залишок балансу перераховано. Проект прийнято!` });
-
-        renderOrders();
-        renderActiveChat();
-        showToast('Проект затверджено!', `Баланс поповнено на +${order.price} ₴.`);
-      }
-    }
-
-    // Select active order and swap chat
-    function selectActiveOrder(orderId, clientId) {
-      adminState.selectedOrderId = orderId;
-      adminState.selectedClientId = clientId;
-
-      renderOrders();
-      renderChatsList();
-      renderActiveChat();
-    }
-
-    // Render Conversation List (Left side of chat box)
-    function renderChatsList() {
+    function renderWriterChatsList() {
       const container = document.getElementById('chats-list-container');
+      if (!container) return;
       container.innerHTML = '';
 
-      adminState.orders.forEach(order => {
-        const isActive = order.id === adminState.selectedOrderId;
-        const activeClass = isActive ? 'bg-dark-slate/60 border-l-2 border-[var(--color-primary)]' : '';
-        const item = document.createElement('div');
-        item.className = `p-3 space-y-1 cursor-pointer transition-colors ${activeClass}`;
-        item.setAttribute('onclick', `selectActiveOrder('${order.id}', '${order.clientId}')`);
+      const allOrders = DB.get('pm_orders', []);
+      const writerOrders = allOrders.filter(o => o.writerId === currentSession.writerId);
 
-        const history = chatHistories[order.id] || [];
-        const lastMsg = history.length > 0 ? history[history.length - 1].text : 'Немає повідомлень...';
-
-        item.innerHTML = `
-          <div class="flex justify-between items-center">
-            <span class="font-bold text-white text-[11px] truncate w-[75%]">${order.clientName}</span>
-            <span class="text-[8px] text-[var(--color-secondary)] font-extrabold tracking-tight">${order.id}</span>
-          </div>
-          <p class="text-[10px] text-gray-500 truncate leading-snug">${lastMsg}</p>
-        `;
+      writerOrders.forEach(order => {
+        const isActive = order.id === selectedOrderId;
+        const bgStyle = isActive ? 'bg-dark-slate text-white' : 'hover:bg-dark-slate/40 text-gray-400';
         
-        container.appendChild(item);
+        const row = document.createElement('button');
+        row.className = "w-full text-left p-3.5 flex flex-col gap-1 transition-colors " + bgStyle;
+        row.setAttribute('onclick', "selectActiveOrder('" + order.id + "', '" + order.clientEmail + "')");
+        
+        row.innerHTML = `
+          <span class="text-[10px] text-gray-500 uppercase font-bold">№` + order.id + `</span>
+          <span class="text-xs font-bold truncate w-full text-white">` + order.clientName + `</span>
+          <span class="text-[9px] truncate w-full text-gray-500">` + order.title + `</span>
+        `;
+        container.appendChild(row);
       });
     }
 
-    // Render current active dialogue messages
-    function renderActiveChat() {
-      const activeId = adminState.selectedOrderId;
-      const order = adminState.orders.find(o => o.id === activeId);
+    function renderWriterActiveChat() {
+      const header = document.getElementById('active-chat-header');
+      const messagesContainer = document.getElementById('messages-container');
+      if (!header || !messagesContainer) return;
+
+      if (!selectedOrderId) {
+        header.innerHTML = '<span class="text-xs text-gray-500">Оберіть чат</span>';
+        messagesContainer.innerHTML = '';
+        return;
+      }
+
+      const orders = DB.get('pm_orders', []);
+      const order = orders.find(o => o.id === selectedOrderId);
       if (!order) return;
 
-      const header = document.getElementById('active-chat-header');
       header.innerHTML = `
-        <div class="flex items-center gap-2.5">
-          <div class="w-8.5 h-8.5 rounded-full bg-opacity-15 bg-[var(--color-primary)] flex items-center justify-center text-[var(--color-primary)] font-bold text-xs border border-[var(--color-primary)]/25">
-            ${order.clientName.charAt(0)}
-          </div>
-          <div>
-            <div class="text-xs font-bold text-white">${order.clientName}</div>
-            <div class="text-[8px] text-gray-500">Замовлення ${order.id} • ${order.status}</div>
-          </div>
+        <div>
+          <span class="block text-xs font-bold text-white">` + order.clientName + `</span>
+          <span class="block text-[9px] text-[var(--color-primary)] uppercase tracking-wider font-bold">Чат по проекту №` + order.id + `</span>
         </div>
-        <span class="flex items-center gap-1.5 text-[9px] text-green-400 font-bold">
-          <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
-          Клієнт онлайн
-        </span>
+        <span class="w-2.5 h-2.5 rounded-full bg-green-500 border-2 border-dark-card animate-ping"></span>
       `;
 
-      const msgContainer = document.getElementById('messages-container');
-      msgContainer.innerHTML = '';
+      messagesContainer.innerHTML = '';
+      const allMessages = DB.get('pm_messages', []);
+      const chatMessages = allMessages.filter(m => m.orderId === selectedOrderId);
 
-      const history = chatHistories[activeId] || [];
-      history.forEach(msg => {
+      chatMessages.forEach(msg => {
         const row = document.createElement('div');
-        if (msg.sender === 'writer') {
-          // Sender is the writer (Right alignment)
-          row.className = 'flex gap-2 items-start max-w-[85%] ml-auto justify-end';
+        if (msg.sender === 'writer' || msg.sender === 'admin') {
+          row.className = 'flex gap-2.5 items-start max-w-[85%] ml-auto justify-end';
           row.innerHTML = `
-            <div class="bg-opacity-80 bg-[var(--color-primary)] rounded-2xl rounded-tr-none p-3 text-xs text-white leading-relaxed">
-              ${msg.text}
+            <div class="bg-opacity-80 bg-[var(--color-primary)] rounded-2xl rounded-tr-none p-3.5 text-xs text-white leading-relaxed">
+              <span class="block text-[8px] font-extrabold uppercase tracking-wide opacity-50 mb-0.5">Ви (` + msg.senderName + `)</span>
+              ` + msg.text + `
             </div>
           `;
         } else {
-          // Sender is the client (Left alignment)
-          row.className = 'flex gap-2 items-start max-w-[85%]';
+          row.className = 'flex gap-2.5 items-start max-w-[85%]';
           row.innerHTML = `
-            <div class="w-7 h-7 rounded-full bg-opacity-15 bg-[var(--color-secondary)] flex items-center justify-center text-[var(--color-secondary)] font-bold text-[10px] flex-shrink-0 border border-[var(--color-secondary)]/20">
-              ${order.clientName.charAt(0)}
+            <div class="w-8 h-8 rounded-full bg-opacity-15 bg-[var(--color-secondary)] flex items-center justify-center text-[var(--color-secondary)] font-bold text-xs flex-shrink-0 border border-[var(--color-secondary)]/20 font-display">
+              ` + msg.senderName.charAt(0) + `
             </div>
-            <div class="bg-dark-card rounded-2xl rounded-tl-none p-3 text-xs text-white leading-relaxed border border-dark-border/40">
-              ${msg.text}
+            <div class="bg-dark-card rounded-2xl rounded-tl-none p-3.5 text-xs text-white border border-dark-border/40 leading-relaxed">
+              ` + msg.text + `
             </div>
           `;
         }
-        msgContainer.appendChild(row);
+        messagesContainer.appendChild(row);
       });
 
-      msgContainer.scrollTop = msgContainer.scrollHeight;
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
-    // Writer sends message
     function handleSendAdminMessage(event) {
       event.preventDefault();
       const input = document.getElementById('admin-chat-input');
       const text = input.value.trim();
-      if (!text) return;
+      if (!text || !selectedOrderId) return;
 
-      const activeId = adminState.selectedOrderId;
-      const order = adminState.orders.find(o => o.id === activeId);
-      if (!order) return;
-
-      // Add to database
-      chatHistories[activeId].push({ sender: 'writer', text: text });
-      renderActiveChat();
-      renderChatsList();
+      const messages = DB.get('pm_messages', []);
+      const newMsg = {
+        orderId: selectedOrderId,
+        sender: 'writer',
+        senderName: currentSession.name,
+        text: text,
+        timestamp: new Date().toISOString()
+      };
+      
+      messages.push(newMsg);
+      DB.set('pm_messages', messages);
       input.value = '';
 
-      // Client simulation response triggers after 1.5 seconds
-      setTimeout(() => {
-        const container = document.getElementById('messages-container');
-        if (!container) return;
-
-        const typingMsg = document.createElement('div');
-        typingMsg.className = 'flex gap-2 items-start max-w-[85%]';
-        typingMsg.innerHTML = `
-          <div class="w-7 h-7 rounded-full bg-opacity-15 bg-[var(--color-secondary)] flex items-center justify-center text-[var(--color-secondary)] font-bold text-[10px] flex-shrink-0 border border-[var(--color-secondary)]/20">
-            ${order.clientName.charAt(0)}
-          </div>
-          <div class="bg-dark-card rounded-2xl rounded-tl-none p-3 text-xs text-white border border-dark-border/40 animate-pulse">
-            Клієнт друкує відповідь...
-          </div>
-        `;
-        container.appendChild(typingMsg);
-        container.scrollTop = container.scrollHeight;
-
-        setTimeout(() => {
-          const clientText = clientAutoReplies[replyIdx % clientAutoReplies.length];
-          replyIdx++;
-
-          // Push to history
-          chatHistories[activeId].push({ sender: 'user', text: clientText });
-
-          // Render
-          renderActiveChat();
-          renderChatsList();
-        }, 1500);
-
-      }, 1000);
+      renderWriterActiveChat();
     }
+
+    function uploadDraftDocument(orderId) {
+      const orders = DB.get('pm_orders', []);
+      const matchedIdx = orders.findIndex(o => o.id === orderId);
+      if (matchedIdx !== -1) {
+        orders[matchedIdx].status = 'На перевірці';
+        orders[matchedIdx].statusIdx = 2;
+        orders[matchedIdx].files.push('Draft_document.docx');
+        
+        DB.set('pm_orders', orders);
+        renderWriterOrders();
+        showToast('Документ надіслано!', "Клієнту відправлено проміжний звіт по проекту " + orderId);
+      }
+    }
+
+    // ----------------------------------------------------
+    // SUPER ADMIN ROLE CONTROL LOGIC
+    // ----------------------------------------------------
+    function switchAdminTab(tabId) {
+      adminCurrentTab = tabId;
+
+      document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+        btn.className = 'admin-tab-btn px-5 py-2.5 text-xs font-bold rounded-xl bg-dark-slate border border-dark-border text-gray-400 hover:text-white transition-all';
+      });
+      document.getElementById('tab-sec-' + tabId).className = 'admin-tab-btn px-5 py-2.5 text-xs font-bold rounded-xl bg-[var(--color-primary)] text-white shadow-lg transition-all';
+
+      document.getElementById('admin-sec-overview').classList.add('hidden');
+      document.getElementById('admin-sec-orders').classList.add('hidden');
+      document.getElementById('admin-sec-employees').classList.add('hidden');
+      document.getElementById('admin-sec-chats').classList.add('hidden');
+      document.getElementById('admin-sec-settings').classList.add('hidden');
+
+      document.getElementById('admin-sec-' + tabId).classList.remove('hidden');
+
+      if (tabId === 'overview') renderAdminOverview();
+      else if (tabId === 'orders') renderAdminOrders();
+      else if (tabId === 'employees') renderAdminWriters();
+      else if (tabId === 'chats') {
+        renderAdminChatsList();
+        renderAdminActiveChat();
+      }
+    }
+
+    function renderAdminOverview() {
+      const orders = DB.get('pm_orders', []);
+      const writers = DB.get('pm_writers', []);
+
+      let totalRevenue = 0;
+      orders.forEach(o => {
+        if (o.statusIdx === 3) totalRevenue += o.price;
+        else if (o.statusIdx === 1 || o.statusIdx === 2) totalRevenue += Math.round(o.price * 0.5);
+      });
+
+      document.getElementById('admin-stat-revenue').innerText = totalRevenue.toLocaleString('uk-UA') + ' ₴';
+      document.getElementById('admin-stat-orders').innerText = orders.length;
+      document.getElementById('admin-stat-writers').innerText = writers.length;
+    }
+
+    function simulateAddOrder() {
+      const orders = DB.get('pm_orders', []);
+      const newId = 'АС-' + Math.floor(1000 + Math.random() * 9000);
+      
+      const newOrder = {
+        id: newId,
+        clientEmail: 'student.test@example.com',
+        clientName: 'Іван П.',
+        title: 'Курсова робота з бухгалтерського обліку',
+        subject: 'Бухгалтерія',
+        pages: 35,
+        price: 0,
+        status: 'Очікує оцінки',
+        statusIdx: 0,
+        writerId: null,
+        deadline: '30.06.2026',
+        files: []
+      };
+
+      orders.unshift(newOrder);
+      DB.set('pm_orders', orders);
+
+      const messages = DB.get('pm_messages', []);
+      messages.push({
+        orderId: newId,
+        sender: 'writer',
+        senderName: 'Підтримка',
+        text: "Вітаємо! Ми отримали вашу нову заявку №" + newId + " з Бухгалтерії. Зараз адмін призначить ціну та автора.",
+        timestamp: new Date().toISOString()
+      });
+      DB.set('pm_messages', messages);
+
+      showToast('Тестову заявку створено!', "Зареєстровано нове замовлення №" + newId);
+      
+      renderAdminOverview();
+    }
+
+    let adminOrderFilter = 'all';
+
+    function filterAdminOrders(statusFilter) {
+      adminOrderFilter = statusFilter;
+      document.querySelectorAll('#admin-sec-orders button').forEach(btn => {
+        if (btn.id.startsWith('admin-tab-ord-')) {
+          btn.className = 'px-3.5 py-1.5 text-xs font-bold rounded-lg bg-dark-slate border border-dark-border text-gray-400 hover:text-white';
+        }
+      });
+      
+      let targetId = 'admin-tab-ord-all';
+      if (statusFilter === 'Awaiting Quote') targetId = 'admin-tab-ord-quote';
+      else if (statusFilter === 'In Work') targetId = 'admin-tab-ord-work';
+      else if (statusFilter === 'Completed') targetId = 'admin-tab-ord-completed';
+      document.getElementById(targetId).className = 'px-3.5 py-1.5 text-xs font-bold rounded-lg bg-[var(--color-primary)] text-white';
+
+      renderAdminOrders();
+    }
+
+    function renderAdminOrders() {
+      const container = document.getElementById('admin-orders-table-body');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const orders = DB.get('pm_orders', []);
+      const writers = DB.get('pm_writers', []);
+
+      const filtered = orders.filter(o => {
+        if (adminOrderFilter === 'all') return true;
+        if (adminOrderFilter === 'Awaiting Quote') return o.statusIdx === 0;
+        if (adminOrderFilter === 'In Work') return o.statusIdx === 1 || o.statusIdx === 2;
+        if (adminOrderFilter === 'Completed') return o.statusIdx === 3;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <tr>
+            <td colspan="7" class="p-8 text-center text-gray-500">Немає замовлень у цій категорії.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      filtered.forEach(order => {
+        const row = document.createElement('tr');
+        row.className = 'hover:bg-dark-slate/30 transition-colors border-b border-dark-border/10';
+
+        let writerSelectHtml = "<select onchange='adminAssignWriter(\"" + order.id + "\", this.value)' class='bg-dark-obsidian border border-dark-border rounded px-2.5 py-1 text-xs text-white focus:outline-none'><option value=''>Не призначено</option>";
+        writers.forEach(w => {
+          const selected = w.id === order.writerId ? 'selected' : '';
+          writerSelectHtml += "<option value='" + w.id + "' " + selected + ">" + w.name + "</option>";
+        });
+        writerSelectHtml += "</select>";
+
+        let priceColumnHtml = '';
+        if (order.statusIdx === 0) {
+          priceColumnHtml = `
+            <div class="flex gap-2">
+              <input type="number" id="admin-price-` + order.id + `" value="` + (order.price || '') + `" placeholder="Ціна" class="w-16 bg-dark-obsidian border border-dark-border rounded px-2 py-1 text-xs text-white focus:outline-none focus:border-[var(--color-primary)]">
+              <button onclick="adminSetPrice('` + order.id + `')" class="px-2.5 py-1 rounded bg-[var(--color-secondary)] text-dark-obsidian font-extrabold text-[10px]">OK</button>
+            </div>
+          `;
+        } else {
+          priceColumnHtml = "<span class='font-bold text-[var(--color-secondary)]'>" + order.price + " ₴</span>";
+        }
+
+        let statusSelectHtml = "<select onchange='adminChangeStatus(\"" + order.id + "\", parseInt(this.value))' class='bg-dark-obsidian border border-dark-border rounded px-2 py-1 text-[10px] font-bold text-white focus:outline-none'>" +
+          "<option value='0' " + (order.statusIdx === 0 ? 'selected' : '') + ">Оцінка</option>" +
+          "<option value='1' " + (order.statusIdx === 1 ? 'selected' : '') + ">В роботі</option>" +
+          "<option value='2' " + (order.statusIdx === 2 ? 'selected' : '') + ">Перевірка</option>" +
+          "<option value='3' " + (order.statusIdx === 3 ? 'selected' : '') + ">Готово</option>" +
+        "</select>";
+
+        row.innerHTML = `
+          <td class="p-4">
+            <span class="block text-[10px] text-gray-500 uppercase font-bold">№` + order.id + `</span>
+            <span class="font-bold text-white truncate max-w-[150px] block">` + order.title + `</span>
+          </td>
+          <td class="p-4 font-medium text-gray-300">` + order.clientName + `</td>
+          <td class="p-4 text-gray-400">` + order.subject + `</td>
+          <td class="p-4">` + priceColumnHtml + `</td>
+          <td class="p-4">` + statusSelectHtml + `</td>
+          <td class="p-4">` + writerSelectHtml + `</td>
+          <td class="p-4 text-right">
+            <button onclick="adminDeleteOrder('` + order.id + `')" class="px-2.5 py-1.5 rounded bg-red-500/10 border border-red-500/20 text-red-400 text-[10px] font-bold">Видалити</button>
+          </td>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function adminSetPrice(orderId) {
+      const input = document.getElementById('admin-price-' + orderId);
+      const val = parseFloat(input.value);
+      if (isNaN(val) || val <= 0) {
+        alert('Вкажіть корисну вартість.');
+        return;
+      }
+
+      const orders = DB.get('pm_orders', []);
+      const matchedIdx = orders.findIndex(o => o.id === orderId);
+      if (matchedIdx !== -1) {
+        orders[matchedIdx].price = val;
+        orders[matchedIdx].statusIdx = 1;
+        orders[matchedIdx].status = 'В роботі';
+        
+        DB.set('pm_orders', orders);
+        renderAdminOrders();
+        showToast('Ціну встановлено!', "Замовлення " + orderId + " переведено у статус 'В роботі'.");
+      }
+    }
+
+    function adminAssignWriter(orderId, writerId) {
+      const orders = DB.get('pm_orders', []);
+      const matchedIdx = orders.findIndex(o => o.id === orderId);
+      if (matchedIdx !== -1) {
+        orders[matchedIdx].writerId = writerId || null;
+        DB.set('pm_orders', orders);
+        showToast('Автора призначено!', "Автора по замовленню " + orderId + " успішно змінено.");
+      }
+    }
+
+    function adminChangeStatus(orderId, newStatusIdx) {
+      const orders = DB.get('pm_orders', []);
+      const matchedIdx = orders.findIndex(o => o.id === orderId);
+      if (matchedIdx !== -1) {
+        const statuses = ['Очікує оцінки', 'В роботі', 'На перевірці', 'Готово'];
+        orders[matchedIdx].statusIdx = newStatusIdx;
+        orders[matchedIdx].status = statuses[newStatusIdx];
+        
+        DB.set('pm_orders', orders);
+        showToast('Статус оновлено!', "Замовлення " + orderId + " переведено у статус '" + statuses[newStatusIdx] + "'.");
+      }
+    }
+
+    function adminDeleteOrder(orderId) {
+      if (!confirm("Ви впевнені, що хочете видалити замовлення " + orderId + "?")) return;
+      const orders = DB.get('pm_orders', []).filter(o => o.id !== orderId);
+      DB.set('pm_orders', orders);
+      renderAdminOrders();
+      showToast('Замовлення видалено', "Замовлення " + orderId + " успішно вилучено.");
+    }
+
+    // Admin employee directory
+    function renderAdminWriters() {
+      const container = document.getElementById('admin-writers-table-body');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const writers = DB.get('pm_writers', []);
+
+      writers.forEach(writer => {
+        const row = document.createElement('tr');
+        row.className = 'hover:bg-dark-slate/30 transition-colors border-b border-dark-border/10';
+
+        row.innerHTML = `
+          <td class="p-4 font-bold text-white">` + writer.name + `</td>
+          <td class="p-4 text-gray-400 font-medium">` + writer.title + `</td>
+          <td class="p-4 text-gray-400">` + writer.specialization + `</td>
+          <td class="p-4 text-center font-bold text-amber-400">` + writer.rating + ` ★</td>
+          <td class="p-4 text-center font-medium text-gray-300">` + writer.completedCount + ` робіт</td>
+          <td class="p-4 text-center font-medium text-gray-300">` + writer.activeOrdersCount + `</td>
+          <td class="p-4 text-right">
+            <button onclick="adminFiredWriter('` + writer.id + `')" class="px-2 py-1 rounded bg-red-500/10 border border-red-500/20 text-red-400 text-[10px] font-bold">Звільнити</button>
+          </td>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function handleHireWriter(event) {
+      event.preventDefault();
+      const name = document.getElementById('hire-name').value.trim();
+      const degree = document.getElementById('hire-degree').value.trim();
+      const specialization = document.getElementById('hire-specialization').value.trim();
+      const email = document.getElementById('hire-email').value.trim().toLowerCase();
+      const password = document.getElementById('hire-password').value;
+
+      const writers = DB.get('pm_writers', []);
+      const newId = 'writer-' + Math.floor(1000 + Math.random() * 9000);
+
+      const newWriter = {
+        id: newId,
+        name: name,
+        title: degree,
+        specialization: specialization,
+        rating: 5.0,
+        completedCount: 0,
+        activeOrdersCount: 0
+      };
+
+      writers.push(newWriter);
+      DB.set('pm_writers', writers);
+
+      const users = DB.get('pm_users', []);
+      users.push({
+        email: email,
+        name: name,
+        password: password,
+        role: 'writer',
+        writerId: newId,
+        balance: 0
+      });
+      DB.set('pm_users', users);
+
+      event.target.reset();
+      renderAdminWriters();
+      showToast('Автора успішно найнято!', "Акаунт для " + name + " створено.");
+    }
+
+    function adminFiredWriter(writerId) {
+      if (!confirm('Ви дійсно хочете звільнити цього автора? Його акаунт буде відсторонено від системи.')) return;
+      const writers = DB.get('pm_writers', []).filter(w => w.id !== writerId);
+      DB.set('pm_writers', writers);
+
+      const users = DB.get('pm_users', []).filter(u => u.writerId !== writerId);
+      DB.set('pm_users', users);
+
+      renderAdminWriters();
+      showToast('Автора звільнено!', 'Дані видалено з бази.');
+    }
+
+    // Admin chats support list
+    function renderAdminChatsList() {
+      const container = document.getElementById('admin-chats-list-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const orders = DB.get('pm_orders', []);
+
+      if (orders.length === 0) {
+        container.innerHTML = '<span class="block text-center text-xs p-6 text-gray-500">Діалогів немає</span>';
+        return;
+      }
+
+      orders.forEach(order => {
+        const isActive = order.id === adminSelectedOrderId;
+        const bgStyle = isActive ? 'bg-dark-slate text-white' : 'hover:bg-dark-slate/40 text-gray-400';
+        
+        const row = document.createElement('button');
+        row.className = "w-full text-left p-3.5 flex flex-col gap-1 transition-colors border-b border-dark-border/20 " + bgStyle;
+        row.setAttribute('onclick', "selectAdminChat('" + order.id + "')");
+
+        row.innerHTML = `
+          <div class="flex justify-between items-center w-full">
+            <span class="text-[10px] text-gray-500 uppercase font-bold">№` + order.id + `</span>
+            <span class="px-1.5 py-0.5 rounded text-[8px] font-bold bg-dark-obsidian text-[var(--color-primary)]">` + order.subject + `</span>
+          </div>
+          <span class="text-xs font-bold truncate w-full text-white">` + order.clientName + `</span>
+          <span class="text-[9px] truncate w-full text-gray-500">` + order.title + `</span>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function selectAdminChat(orderId) {
+      adminSelectedOrderId = orderId;
+      renderAdminChatsList();
+      renderAdminActiveChat();
+    }
+
+    function renderAdminActiveChat() {
+      const header = document.getElementById('admin-active-chat-header');
+      const messagesContainer = document.getElementById('admin-messages-container');
+      if (!header || !messagesContainer) return;
+
+      if (!adminSelectedOrderId) {
+        header.innerHTML = '<span class="text-xs text-gray-500">Оберіть діалог для надання підтримки</span>';
+        messagesContainer.innerHTML = '';
+        return;
+      }
+
+      const orders = DB.get('pm_orders', []);
+      const order = orders.find(o => o.id === adminSelectedOrderId);
+      if (!order) return;
+
+      header.innerHTML = `
+        <div>
+          <span class="block text-xs font-bold text-white">` + order.clientName + `</span>
+          <span class="block text-[9px] text-[var(--color-secondary)] uppercase tracking-wider font-bold">Чат підтримки по замовленню №` + order.id + `</span>
+        </div>
+        <span class="w-2.5 h-2.5 rounded-full bg-purple-500 border-2 border-dark-card animate-pulse"></span>
+      `;
+
+      messagesContainer.innerHTML = '';
+      const allMessages = DB.get('pm_messages', []);
+      const chatMessages = allMessages.filter(m => m.orderId === adminSelectedOrderId);
+
+      chatMessages.forEach(msg => {
+        let bubbleHtml = '';
+        if (msg.sender === 'student') {
+          bubbleHtml = `
+            <div class="flex gap-2.5 items-start max-w-[85%]">
+              <div class="w-8 h-8 rounded-full bg-opacity-15 bg-[var(--color-secondary)] flex items-center justify-center text-[var(--color-secondary)] font-bold text-xs flex-shrink-0 border border-[var(--color-secondary)]/20 font-display">
+                ` + msg.senderName.charAt(0) + `
+              </div>
+              <div class="bg-dark-card rounded-2xl rounded-tl-none p-3.5 text-xs text-white border border-dark-border/40 leading-relaxed">
+                <span class="block text-[8px] font-extrabold uppercase tracking-wide opacity-50 mb-0.5">` + msg.senderName + ` (Клієнт)</span>
+                ` + msg.text + `
+              </div>
+            </div>
+          `;
+        } else {
+          bubbleHtml = `
+            <div class="flex gap-2.5 items-start max-w-[85%] ml-auto justify-end">
+              <div class="bg-opacity-80 bg-[var(--color-primary)] rounded-2xl rounded-tr-none p-3.5 text-xs text-white leading-relaxed">
+                <span class="block text-[8px] font-extrabold uppercase tracking-wide opacity-50 mb-0.5">` + msg.senderName + " (" + (msg.sender === 'admin' ? 'Адмін' : 'Автор') + `)</span>
+                ` + msg.text + `
+              </div>
+            </div>
+          `;
+        }
+
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'w-full mb-3';
+        msgDiv.innerHTML = bubbleHtml;
+        messagesContainer.appendChild(msgDiv);
+      });
+
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function handleSendSupportMessage(event) {
+      event.preventDefault();
+      const input = document.getElementById('support-chat-input');
+      const text = input.value.trim();
+      if (!text || !adminSelectedOrderId) return;
+
+      const messages = DB.get('pm_messages', []);
+      const newMsg = {
+        orderId: adminSelectedOrderId,
+        sender: 'admin',
+        senderName: 'Адміністрація',
+        text: text,
+        timestamp: new Date().toISOString()
+      };
+
+      messages.push(newMsg);
+      DB.set('pm_messages', messages);
+      input.value = '';
+
+      renderAdminActiveChat();
+    }
+
+    // Settings logic
+    function resetSystemDatabase() {
+      if (!confirm('Ви дійсно бажаєте очистити і скинути базу даних до початкового демонстраційного стану? Усі нові клієнти та замовлення будуть видалені!')) return;
+      
+      localStorage.removeItem('pm_users');
+      localStorage.removeItem('pm_orders');
+      localStorage.removeItem('pm_messages');
+      localStorage.removeItem('pm_writers');
+      localStorage.removeItem('pm_session');
+      
+      DB.init();
+      currentSession = null;
+
+      showToast('Базу даних скинуто!', 'Система успішно перезапущена.');
+      renderDashboardState();
+    }
+
+    // Sync other windows dynamically
+    window.addEventListener('storage', () => {
+      currentSession = DB.get('pm_session', null);
+      renderDashboardState();
+    });
+
+    // Initialize page logs
+    window.addEventListener('DOMContentLoaded', () => {
+      renderDashboardState();
+    });
   </script>
 </body>
 </html>
