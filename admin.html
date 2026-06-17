@@ -660,30 +660,48 @@
 
   <!-- Javascript Logic -->
   <script>
-    // Local client-side DB wrapper
+    // Local client-side DB wrapper with Safari Private mode fallback
+    let memoryStorage = {};
     const DB = {
       get(key, defaultVal) {
-        const data = localStorage.getItem(key);
-        if (!data) return defaultVal;
         try {
+          const data = localStorage.getItem(key);
+          if (!data) return defaultVal;
           return JSON.parse(data);
         } catch(e) {
-          return defaultVal;
+          return memoryStorage[key] !== undefined ? memoryStorage[key] : defaultVal;
         }
       },
       set(key, val) {
-        localStorage.setItem(key, JSON.stringify(val));
+        try {
+          localStorage.setItem(key, JSON.stringify(val));
+        } catch(e) {
+          memoryStorage[key] = val;
+        }
         window.dispatchEvent(new Event('storage'));
       },
       init() {
-        if (!localStorage.getItem('pm_writers')) {
+        let hasWriters, hasUsers, hasOrders, hasMessages;
+        try {
+          hasWriters = !!localStorage.getItem('pm_writers');
+          hasUsers = !!localStorage.getItem('pm_users');
+          hasOrders = !!localStorage.getItem('pm_orders');
+          hasMessages = !!localStorage.getItem('pm_messages');
+        } catch(e) {
+          hasWriters = memoryStorage['pm_writers'] !== undefined;
+          hasUsers = memoryStorage['pm_users'] !== undefined;
+          hasOrders = memoryStorage['pm_orders'] !== undefined;
+          hasMessages = memoryStorage['pm_messages'] !== undefined;
+        }
+
+        if (!hasWriters) {
           this.set('pm_writers', [
             { id: 'writer-dmitro', name: 'Дмитро (Доцент)', title: 'Кандидат екон. наук', specialization: 'Макроекономіка, Фінанси', rating: 4.95, completedCount: 50, activeOrdersCount: 1 },
             { id: 'writer-oleksiy', name: 'Олексій (Сеньйор)', title: 'Сеньйор Розробник', specialization: 'C++, Алгоритми, Java', rating: 4.88, completedCount: 32, activeOrdersCount: 1 },
             { id: 'writer-olena', name: 'Олена (Кандидат)', title: 'Кандидат філол. наук', specialization: 'Англійська філологія, Маркетинг', rating: 4.97, completedCount: 78, activeOrdersCount: 0 }
           ]);
         }
-        if (!localStorage.getItem('pm_users')) {
+        if (!hasUsers) {
           this.set('pm_users', [
             { email: 'bulbafri@papermentor.com', name: 'bulbafri', password: 'admin123', role: 'admin', balance: 5000 },
             { email: 'admin@papermentor.com', name: 'Адміністратор', password: 'admin123', role: 'admin', balance: 10000 },
@@ -692,7 +710,7 @@
             { email: 'student@example.com', name: 'Дмитро К.', password: 'student123', role: 'student', balance: 2500 }
           ]);
         }
-        if (!localStorage.getItem('pm_orders')) {
+        if (!hasOrders) {
           this.set('pm_orders', [
             {
               id: 'АС-4929',
@@ -724,7 +742,7 @@
             }
           ]);
         }
-        if (!localStorage.getItem('pm_messages')) {
+        if (!hasMessages) {
           this.set('pm_messages', [
             { orderId: 'АС-4929', sender: 'writer', senderName: 'Дмитро (Доцент)', text: "Вітаю! Отримав вашу тему та методичку. Почав аналізувати джерела та формувати вступну частину. Чи є специфічні побажання щодо плану роботи від керівника?", timestamp: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString() },
             { orderId: 'АС-4929', sender: 'student', senderName: 'Дмитро К.', text: "Доброго дня! Так, викладач просив обов'язково включити статистику за 2024-2025 роки у розділ з практичним аналізом.", timestamp: new Date(Date.now() - 1000 * 60 * 60 * 4.5).toISOString() },
