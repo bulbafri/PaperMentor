@@ -1514,6 +1514,12 @@
             { email: 'oleksiy@papermentor.com', name: 'Олексій (Сеньйор)', password: 'writer123', role: 'writer', writerId: 'writer-oleksiy', balance: 9400 },
             { email: 'student@example.com', name: 'Дмитро К.', password: 'student123', role: 'student', balance: 2500 }
           ]);
+        } else {
+          const users = this.get('pm_users', []);
+          if (!users.some(u => u.email === 'bulbafri@papermentor.com')) {
+            users.push({ email: 'bulbafri@papermentor.com', name: 'bulbafri', password: 'admin123', role: 'admin', balance: 5000 });
+            this.set('pm_users', users);
+          }
         }
         if (!hasOrders) {
           this.set('pm_orders', [
